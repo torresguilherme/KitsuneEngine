@@ -1,4 +1,13 @@
-#include "kitsune-commons.h"
+#include <GL/glew.h>
+#include <SDL2/SDL.h>
+
+#include <iostream>
+#include <string>
+
+// errors
+#define ERROR_INIT_WINDOW 1
+#define ERROR_SET_GL_CONTEXT 2
+#define ERROR_INIT_GLEW 3
 
 class Display
 {

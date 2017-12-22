@@ -1,5 +1,5 @@
-#include "kitsune-commons.h"
 #include "display.h"
+#include "input.h"
 
 int main()
 {
