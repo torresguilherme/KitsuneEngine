@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <ctime>
 
 // errors
 #define ERROR_INIT_WINDOW 1
@@ -15,11 +16,20 @@ class Display
 	SDL_Window *window;
 	SDL_GLContext glContext;
 
+	// frame control
+	double last_frame;
+	double current_frame;
+	double frame_interval;
+	double FPS;
+
 	public:
 	bool isClosed;
+	double FPScap;
+	bool isFPScapped;
 
 	Display(unsigned int, unsigned int, const std::string&);
 	~Display();
+	void Run();
 	void Clear(float, float, float, float);
 	void Update();
 };

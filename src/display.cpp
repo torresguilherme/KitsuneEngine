@@ -40,6 +40,10 @@ Display::Display(unsigned int width, unsigned int height, const std::string& tit
 	glCullFace(GL_BACK);
 
 	isClosed = false;
+
+	//FPS cap
+	isFPScapped = true;
+	FPScap = 60.0;
 }
 
 Display::~Display()
@@ -47,6 +51,16 @@ Display::~Display()
 	SDL_GL_DeleteContext(glContext);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+}
+
+void Display::Run()
+{
+	// to do: get fps, set cap
+	while(!isClosed)
+	{
+		Clear(0.5f, 0.5f, 0.0f, 1.0f);
+		Update();
+	}
 }
 
 void Display::Clear(float red, float green, float blue, float alpha)
