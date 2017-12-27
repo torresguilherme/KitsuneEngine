@@ -12,8 +12,8 @@ Game::Game()
 
 Game::~Game()
 {
-	fullDelete(screen);
-	fullDelete(input);
+	delete screen;
+	delete input;
 }
 
 void Game::Run()
@@ -44,6 +44,7 @@ void Game::Run()
 		lastFrame = curFrame;
 		screen->Clear(0.5f, 0.0f, 0.5f, 1.0f);
 		screen->Update();
+		std::cout<<curFPS<<std::endl;
 	}
 }
 

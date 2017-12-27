@@ -6,12 +6,13 @@
 
 class Input
 {
-	public:
 	std::map<std::string, SDL_Keycode> inputMap;
+	public:
 
 	Input();
 	~Input();
 	void Update();
+	void InsertNewAction(std::string&, SDL_Keycode);
 	bool IsActionToggled(std::string&);
 	bool IsActionPressed(std::string&);
 };

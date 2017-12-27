@@ -8,6 +8,11 @@ Input::~Input()
 {
 }
 
+void Input::InsertNewAction(std::string& name, SDL_Keycode key)
+{
+	inputMap.insert(std::pair<std::string&, SDL_Keycode>(name, key));
+}
+
 void Input::Update()
 {
 }
