@@ -1,9 +1,11 @@
 #include "display.h"
-#include "input.h"
+#include "game.h"
 
 int main()
 {
-	Display display(800, 600, "test");
-	display.Run();
+	//Display display(800, 600, "test");
+	//display.Run();
+	Game game;
+	game.Run();
 	return 0;
 }

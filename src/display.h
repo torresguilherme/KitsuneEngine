@@ -1,3 +1,6 @@
+#ifndef DISPLAY_H_
+#define DISPLAY_H_
+
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
@@ -17,15 +20,15 @@ class Display
 	SDL_GLContext glContext;
 
 	// frame control
-	double last_frame;
-	double current_frame;
-	double frame_interval;
-	double FPS;
+	//double last_frame;
+	//double current_frame;
+	//double frame_interval;
+	//double FPS;
 
 	public:
 	bool isClosed;
-	double FPScap;
-	bool isFPScapped;
+	//double FPScap;
+	//bool isFPScapped;
 
 	Display(unsigned int, unsigned int, const std::string&);
 	~Display();
@@ -33,3 +36,5 @@ class Display
 	void Clear(float, float, float, float);
 	void Update();
 };
+
+#endif

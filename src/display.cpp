@@ -42,8 +42,8 @@ Display::Display(unsigned int width, unsigned int height, const std::string& tit
 	isClosed = false;
 
 	//FPS cap
-	isFPScapped = true;
-	FPScap = 60.0;
+	//isFPScapped = true;
+	//FPScap = 60.0;
 }
 
 Display::~Display()

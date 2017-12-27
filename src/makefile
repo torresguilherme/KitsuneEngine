@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -no-pie -g3 -std=c++17
-SRC = main.cpp display.cpp
+SRC = main.cpp display.cpp game.cpp
 BIN = exec
 
 GL_LINKS = -lGL -lGLEW -lSDL2
