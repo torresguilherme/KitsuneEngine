@@ -3,6 +3,7 @@
 Game::Game()
 {
 	screen = new Display(800, 600, "test");
+	input = new Input;
 	isFPScapped = true;
 	FPS = 144.0;
 	frameInterval = 1/FPS;
@@ -12,6 +13,7 @@ Game::Game()
 Game::~Game()
 {
 	fullDelete(screen);
+	fullDelete(input);
 }
 
 void Game::Run()
@@ -40,8 +42,13 @@ void Game::Run()
 		}
 
 		lastFrame = curFrame;
-		std::cout<<curFPS<<std::endl;
 		screen->Clear(0.5f, 0.0f, 0.5f, 1.0f);
 		screen->Update();
 	}
+}
+
+static inline void fullDelete(void *ptr)
+{
+	free(ptr);
+	ptr = 0;
 }

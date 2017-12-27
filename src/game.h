@@ -1,16 +1,12 @@
 #ifndef GAME_H_
 #define GAME_H_
 #include "display.h"
-
-static inline void fullDelete(void *ptr)
-{
-	free(ptr);
-	ptr = 0;
-}
+#include "input.h"
 
 class Game
 {
 	Display* screen;
+	Input* input;
 	clock_t lastFrame;
 	clock_t curFrame;
 	double curFrameInterval;
@@ -26,5 +22,7 @@ class Game
 	~Game();
 	void Run();
 };
+
+static inline void fullDelete(void*);
 
 #endif
