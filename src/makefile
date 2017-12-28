@@ -10,8 +10,10 @@ VFLAGS = valgrind -v --show-leak-kinds=all --track-origins=yes --leak-check=full
 
 all: FORCE
 	$(CC) $(CFLAGS) $(SRC) -o $(BIN) $(GL_LINKS)
-test: all
+run:
 	./$(BIN)
+test: all run
+
 valgrind: all
 	$(VFLAGS) ./$(BIN)
 FORCE:

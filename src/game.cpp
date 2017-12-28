@@ -44,8 +44,13 @@ void Game::Run()
 		lastFrame = curFrame;
 		screen->Clear(0.5f, 0.0f, 0.5f, 1.0f);
 		screen->Update();
-		std::cout<<curFPS<<std::endl;
+		//std::cout<<curFPS<<std::endl;
 	}
+}
+
+void Game::Quit()
+{
+	screen->isClosed = true;
 }
 
 static inline void fullDelete(void *ptr)
