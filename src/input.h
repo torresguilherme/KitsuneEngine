@@ -16,9 +16,9 @@ class Input
 	Input();
 	~Input();
 	void Update();
-	void InsertNewAction(std::string&, SDL_Keycode);
-	bool IsActionToggled(std::string&);
-	bool IsActionPressed(std::string&);
+	void InsertNewAction(std::string, SDL_Keycode);
+	bool IsActionToggled(std::string);
+	bool IsActionPressed(std::string);
 };
 
 #endif
