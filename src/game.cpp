@@ -4,13 +4,13 @@ Game::Game()
 {
 	screen = new Display(800, 600, "test");
 	input = new Input;
-	isFPScapped = false;
+	isFPScapped = true;
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
 
 	//test
-	input->InsertNewAction("botao pra cima", SDLK_UP);
+	input->InsertNewAction("cima", SDL_SCANCODE_W);
 }
 
 Game::~Game()
@@ -23,11 +23,15 @@ void Game::Run()
 {
 	while(!screen->isClosed)
 	{
-		curFrame = clock();
+		input->Update();
+		if(input->IsActionPressed("cima"))
+		{
+			std::cout<<"deu bom"<<std::endl;
+		}
 
+		curFrame = clock();
 		if(isFPScapped)
 		{
-			input->Update();
 			curFrameInterval = ((double) curFrame - lastFrame)/CLOCKS_PER_SEC;
 			while(curFrameInterval <= frameInterval)
 			{
@@ -41,18 +45,13 @@ void Game::Run()
 
 		else
 		{
-			input->Update();
-			if(input->IsActionPressed("botao pra cima"))
-			{
-				std::cout<<"deu bom"<<std::endl;
-			}
 			curFPS = 1/(((double) curFrame - lastFrame)/CLOCKS_PER_SEC);
 			delta = 1/curFPS;
 		}
 
-		lastFrame = curFrame;
 		screen->Clear(0.5f, 0.0f, 0.5f, 1.0f);
 		screen->Update();
+		lastFrame = curFrame;
 		std::cout<<curFPS<<std::endl;
 	}
 }

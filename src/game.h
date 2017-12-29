@@ -2,6 +2,7 @@
 #define GAME_H_
 #include "display.h"
 #include "input.h"
+#include <SDL2/SDL.h>
 
 class Game
 {
