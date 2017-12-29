@@ -16,11 +16,11 @@ Game::~Game()
 	delete input;
 }
 
-void Game::Run()
+void Game::run()
 {
 	while(!screen->isClosed)
 	{
-		input->Update();
+		input->update();
 
 		curFrame = clock();
 		if(isFPScapped)
@@ -42,14 +42,14 @@ void Game::Run()
 			delta = 1/curFPS;
 		}
 
-		screen->Clear(0.5f, 0.0f, 0.5f, 1.0f);
-		screen->Update();
+		screen->clear(0.5f, 0.0f, 0.5f, 1.0f);
+		screen->update();
 		lastFrame = curFrame;
 		std::cout<<curFPS<<std::endl;
 	}
 }
 
-void Game::Quit()
+void Game::quit()
 {
 	screen->isClosed = true;
 }

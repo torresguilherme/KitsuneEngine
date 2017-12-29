@@ -15,14 +15,14 @@ Input::~Input()
 	SDL_Quit();
 }
 
-void Input::InsertNewAction(string name, SDL_Scancode key)
+void Input::insertNewAction(string name, SDL_Scancode key)
 {
 	inputMap.insert(pair<string, SDL_Scancode>(name, key));
 	isDown.push_back(false);
 	wasDownLastFrame.push_back(false);
 }
 
-void Input::Update()
+void Input::update()
 {
 	wasDownLastFrame = isDown;
 	SDL_PumpEvents();
@@ -33,7 +33,7 @@ void Input::Update()
 	}
 }
 
-bool Input::IsActionToggled(string action)
+bool Input::isActionToggled(string action)
 {
 	if(!inputMap.empty())
 	{
@@ -47,7 +47,7 @@ bool Input::IsActionToggled(string action)
 	}
 }
 
-bool Input::IsActionPressed(string action)
+bool Input::isActionPressed(string action)
 {
 	if(!inputMap.empty())
 	{

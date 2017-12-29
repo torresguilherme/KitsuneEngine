@@ -16,10 +16,10 @@ class Input
 	public:
 	Input();
 	~Input();
-	void Update();
-	void InsertNewAction(std::string, SDL_Scancode);
-	bool IsActionToggled(std::string);
-	bool IsActionPressed(std::string);
+	void update();
+	void insertNewAction(std::string, SDL_Scancode);
+	bool isActionToggled(std::string);
+	bool isActionPressed(std::string);
 };
 
 #endif

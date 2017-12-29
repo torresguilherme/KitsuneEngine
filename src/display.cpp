@@ -53,23 +53,23 @@ Display::~Display()
 	SDL_Quit();
 }
 
-void Display::Run()
+void Display::run()
 {
 	// to do: get fps, set cap
 	while(!isClosed)
 	{
-		Clear(0.5f, 0.5f, 0.0f, 1.0f);
-		Update();
+		clear(0.5f, 0.5f, 0.0f, 1.0f);
+		update();
 	}
 }
 
-void Display::Clear(float red, float green, float blue, float alpha)
+void Display::clear(float red, float green, float blue, float alpha)
 {
 	glClearColor(red, green, blue, alpha);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Display::Update()
+void Display::update()
 {
 	SDL_GL_SwapWindow(window);
 	SDL_Event ev;

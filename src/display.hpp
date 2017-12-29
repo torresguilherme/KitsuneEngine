@@ -32,9 +32,9 @@ class Display
 
 	Display(unsigned int, unsigned int, const std::string&);
 	~Display();
-	void Run();
-	void Clear(float, float, float, float);
-	void Update();
+	void run();
+	void clear(float, float, float, float);
+	void update();
 };
 
 #endif

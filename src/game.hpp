@@ -21,8 +21,8 @@ class Game
 
 	Game();
 	~Game();
-	void Run();
-	void Quit();
+	void run();
+	void quit();
 };
 
 static inline void fullDelete(void*);
