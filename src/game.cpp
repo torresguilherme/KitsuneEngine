@@ -8,9 +8,6 @@ Game::Game()
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
-
-	//test
-	input->InsertNewAction("cima", SDL_SCANCODE_W);
 }
 
 Game::~Game()
@@ -24,10 +21,6 @@ void Game::Run()
 	while(!screen->isClosed)
 	{
 		input->Update();
-		if(input->IsActionPressed("cima"))
-		{
-			std::cout<<"deu bom"<<std::endl;
-		}
 
 		curFrame = clock();
 		if(isFPScapped)

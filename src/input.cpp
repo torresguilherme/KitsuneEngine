@@ -31,7 +31,6 @@ void Input::Update()
 	{
 		isDown[distance(inputMap.begin(), i)] = state[(*i).second];
 	}
-	//delete state;
 }
 
 bool Input::IsActionToggled(string action)
@@ -43,6 +42,5 @@ bool Input::IsActionToggled(string action)
 bool Input::IsActionPressed(string action)
 {
 	map<string, SDL_Scancode>::iterator it = inputMap.find(action);
-	cout<<isDown[distance(inputMap.begin(), it)]<<' '<<distance(inputMap.begin(), it)<<endl;
 	return isDown[distance(inputMap.begin(), it)];
 }
