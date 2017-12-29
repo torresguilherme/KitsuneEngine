@@ -1,4 +1,4 @@
-#include "display.h"
+#include "display.hpp"
 
 Display::Display(unsigned int width, unsigned int height, const std::string& title)
 {

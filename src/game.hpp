@@ -1,7 +1,7 @@
-#ifndef GAME_H_
-#define GAME_H_
-#include "display.h"
-#include "input.h"
+#ifndef GAME_HPP_
+#define GAME_HPP_
+#include "display.hpp"
+#include "input.hpp"
 #include <SDL2/SDL.h>
 
 class Game

@@ -1,4 +1,4 @@
-#include "input.h"
+#include "input.hpp"
 using namespace std;
 
 Input::Input()
@@ -26,7 +26,7 @@ void Input::Update()
 {
 	wasDownLastFrame = isDown;
 	SDL_PumpEvents();
-	state = const_cast <Uint8*> (SDL_GetKeyboardState(NULL));
+	state = SDL_GetKeyboardState(NULL);
 	for(map<string, SDL_Scancode>::iterator i = inputMap.begin(); i != inputMap.end(); i++)
 	{
 		isDown[distance(inputMap.begin(), i)] = state[(*i).second];
@@ -35,12 +35,28 @@ void Input::Update()
 
 bool Input::IsActionToggled(string action)
 {
-	map<string, SDL_Scancode>::iterator it = inputMap.find(action);
-	return isDown[distance(inputMap.begin(), it)] && !wasDownLastFrame[distance(inputMap.begin(), it)];
+	if(!inputMap.empty())
+	{
+		map<string, SDL_Scancode>::iterator it = inputMap.find(action);
+		return isDown[distance(inputMap.begin(), it)] && !wasDownLastFrame[distance(inputMap.begin(), it)];
+	}
+
+	else
+	{
+		return false;
+	}
 }
 
 bool Input::IsActionPressed(string action)
 {
-	map<string, SDL_Scancode>::iterator it = inputMap.find(action);
-	return isDown[distance(inputMap.begin(), it)];
+	if(!inputMap.empty())
+	{
+		map<string, SDL_Scancode>::iterator it = inputMap.find(action);
+		return isDown[distance(inputMap.begin(), it)];
+	}
+
+	else
+	{
+		return false;
+	}
 }
