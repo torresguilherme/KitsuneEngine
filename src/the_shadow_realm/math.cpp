@@ -29,6 +29,10 @@ Vec2 Vec2::rotate(float degrees)
 	return ret;
 }
 
+Vec2 Vec2::cross(Vec2& a, Vec2& b)
+{
+}
+
 // to do: operators
 
 Vec3::Vec3(float x, float y, float z)
@@ -61,9 +65,23 @@ Vec3 Vec3::rotate(float degrees)
 	return ret;
 }
 
+Vec3 Vec3::cross(Vec3& a, Vec3& b)
+{
+}
+
 // to do: operators
 
-void makeIdentity(Mat4 matrix)
+float const* Mat4::operator[](int const in) const
+{
+	return &m[0][in];
+}
+
+float* Mat4::operator[](int const in)
+{
+	return &m[0][in];
+}
+
+void makeIdentity(Mat4& matrix)
 {
 	for(int i = 0; i < 4; i++)
 	{

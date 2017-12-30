@@ -13,10 +13,14 @@ class Vec2
 	Vec2 normalize();
 	float distanceTo(Vec2&);
 	Vec2 rotate(float);
+	Vec2 cross(Vec2&, Vec2&);
 };
 
-// operadores: equal, soma, sub, mul por escalar,
-// cross prod, dot prod, div por escalar
+Vec2 operator+(const Vec2& a, const Vec2& b);
+Vec2 operator-(const Vec2& a, const Vec2& b);
+Vec2 operator*(const Vec2& a, const float real);
+Vec2 operator/(const Vec2& a, const float real);
+float operator*(const Vec2& a, const Vec2& b);
 
 class Vec3
 {
@@ -30,15 +34,27 @@ class Vec3
 	Vec3 normalize();
 	float distanceTo(Vec3&);
 	Vec3 rotate(float);
+	Vec3 cross(Vec3&, Vec3&);
 };
 
-// operadores: equal, soma, sub, mul por escalar
-// cross prod, dot prod, div por escalar
+Vec3 operator+(const Vec3& a, const Vec3& b);
+Vec3 operator-(const Vec3& a, const Vec3& b);
+Vec3 operator*(const Vec3& a, const float real);
+Vec3 operator/(const Vec3& a, const float real);
+float operator*(const Vec3& a, const Vec3& b);
 
-typedef float Mat4[4][4];
-void makeIdentity(Mat4);
+class Mat4
+{
+	static const int MAT_SIZE = 4;
+	float m[MAT_SIZE][MAT_SIZE];
 
-// operadores: mul p/ mat4
+	public:
+	float const* operator[](int const) const;
+	float* operator[](int const);
+};	
+
+void makeIdentity(Mat4&);
+Mat4 operator*(const Mat4& a, const Mat4& b);
 
 class Quaternion
 {
@@ -54,6 +70,7 @@ class Quaternion
 	Quaternion conjugate();
 };
 
-// operadores: mul p/ quaternion, mul p/ vector3
+Quaternion operator*(const Quaternion&, const Vec3&);
+Quaternion operator*(const Quaternion&, const Quaternion&);
 
 #endif
