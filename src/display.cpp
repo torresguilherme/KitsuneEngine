@@ -37,13 +37,12 @@ Display::Display(unsigned int width, unsigned int height, const std::string& tit
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CW);
 	glCullFace(GL_BACK);
+	// to do: depth clamp
 
+	glEnable(GL_FRAMEBUFFER_SRGB);
 	isClosed = false;
-
-	//FPS cap
-	//isFPScapped = true;
-	//FPScap = 60.0;
 }
 
 Display::~Display()
@@ -66,7 +65,7 @@ void Display::run()
 void Display::clear(float red, float green, float blue, float alpha)
 {
 	glClearColor(red, green, blue, alpha);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Display::update()
