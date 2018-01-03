@@ -2,6 +2,7 @@
 #define MESH_HPP_
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <vector>
 
 class Vertex
 {
