@@ -1,5 +1,6 @@
 #ifndef MESH_HPP_
 #define MESH_HPP_
+#include <iostream>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <vector>
@@ -20,7 +21,7 @@ class Mesh
 	enum
 	{
 		POSITION_VB,
-		TEXCOORD_VB,
+		//TEXCOORD_VB,
 		NUM_BUFFERS
 	};
 

@@ -2,6 +2,7 @@
 #define GAME_HPP_
 #include "display.hpp"
 #include "input.hpp"
+#include "render/mesh.hpp"
 #include <SDL2/SDL.h>
 
 class Game
@@ -13,6 +14,8 @@ class Game
 	double curFrameInterval;
 	double frameInterval;
 	double FPS;
+
+	std::vector<Mesh> mesh;
 
 	public:
 	bool isFPScapped;

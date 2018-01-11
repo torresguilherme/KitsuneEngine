@@ -8,6 +8,16 @@ Game::Game()
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
+
+	// testing mesh/shaders
+	Vertex vertices[] =
+	{
+		Vertex(glm::vec3(-1.0, -1.0, 0), glm::vec2(0.0, 10.0)),
+		Vertex(glm::vec3(0, 1.0, 0), glm::vec2(5.0, 0.0)),
+		Vertex(glm::vec3(1.0, -1.0, 0), glm::vec2(10.0, 10.0))
+	};
+
+	mesh.push_back(Mesh(vertices, sizeof(vertices) / sizeof(vertices[0])));
 }
 
 Game::~Game()
@@ -20,7 +30,9 @@ void Game::run()
 {
 	while(!screen->isClosed)
 	{
+		screen->clear(0.5f, 0.0f, 0.5f, 1.0f);
 		input->update();
+		mesh[0].Draw();
 
 		curFrame = clock();
 		if(isFPScapped)
@@ -42,7 +54,6 @@ void Game::run()
 			delta = 1/curFPS;
 		}
 
-		screen->clear(0.5f, 0.0f, 0.5f, 1.0f);
 		screen->update();
 		lastFrame = curFrame;
 		std::cout<<curFPS<<std::endl;
