@@ -12,12 +12,13 @@ Game::Game()
 	// testing mesh/shaders
 	Vertex vertices[] =
 	{
-		Vertex(glm::vec3(-1.0, -1.0, 0), glm::vec2(0.0, 10.0)),
+		Vertex(glm::vec3(-1.0, -1.0, 0), glm::vec2(0.0, 0.10)),
 		Vertex(glm::vec3(0, 1.0, 0), glm::vec2(5.0, 0.0)),
 		Vertex(glm::vec3(1.0, -1.0, 0), glm::vec2(10.0, 10.0))
 	};
 
 	mesh.push_back(Mesh(vertices, sizeof(vertices) / sizeof(vertices[0])));
+	shader.push_back(Shader("", ""));
 }
 
 Game::~Game()
@@ -30,9 +31,10 @@ void Game::run()
 {
 	while(!screen->isClosed)
 	{
-		screen->clear(0.5f, 0.0f, 0.5f, 1.0f);
+		screen->clear(0.0f, 0.0f, 0.0f, 1.0f);
 		input->update();
-		mesh[0].Draw();
+		mesh[0].draw();
+		shader[0].bind();
 
 		curFrame = clock();
 		if(isFPScapped)

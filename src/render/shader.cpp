@@ -4,6 +4,11 @@ using namespace std;
 Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShaderFile*/)
 {
   program = glCreateProgram();
+  if(program == 0)
+  {
+    std::cerr << "error: could not find a valid memory location for the shader program, shader creation failed!" << '\n';
+    exit(5);
+  }
   string aux;
 
   aux = LoadShader(vertShaderFile);
@@ -15,6 +20,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
   {
     shaders[0] = CreateShader(LoadBasicShader(0), GL_VERTEX_SHADER);
   }
+  cout<<"vertex shader created successfully"<<endl;
 
   aux = LoadShader(fragShaderFile);
   if(aux != "")
@@ -25,6 +31,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
   {
     shaders[1] = CreateShader(LoadBasicShader(1), GL_FRAGMENT_SHADER);
   }
+  cout<<"fragment shader created successfully"<<endl;
 
   /*
   aux = LoadShader(geomShaderFile);
@@ -36,6 +43,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
   {
     shaders[2] = CreateShader(LoadBasicShader(2), GL_GEOMETRY_SHADER);
   }
+  cout<<"geometry shader created successfully"<<endl;
 
   */
   for (int i = 0; i < NUM_SHADERS; i++)
@@ -61,12 +69,12 @@ Shader::~Shader()
   glDeleteProgram(program);
 }
 
-void Shader::Bind()
+void Shader::bind()
 {
   glUseProgram(program);
 }
 
-void Shader::Update()
+void Shader::update()
 {
 }
 
@@ -106,7 +114,7 @@ string Shader::LoadBasicShader(int type)
   return output;
 }
 
-static string LoadShader(string& fileName)
+string LoadShader(string& fileName)
 {
 	ifstream file;
 	file.open((fileName).c_str());
@@ -132,7 +140,7 @@ static string LoadShader(string& fileName)
 	return output;
 }
 
-static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const string& errorMessage)
+void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const string& errorMessage)
 {
 	GLint success = 0;
 	GLchar error[1024] = {0};
@@ -154,7 +162,7 @@ static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const s
 	}
 }
 
-static GLuint CreateShader(const string& text, GLenum shaderType)
+GLuint CreateShader(const string& text, GLenum shaderType)
 {
 	GLuint shader = glCreateShader(shaderType);
 	if(shader == 0)

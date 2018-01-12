@@ -32,7 +32,7 @@ class Mesh
 	public:
 	Mesh(Vertex*, unsigned int);
 	virtual ~Mesh();
-	void Draw();
+	void draw();
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include "display.hpp"
 #include "input.hpp"
 #include "render/mesh.hpp"
+#include "render/shader.hpp"
 #include <SDL2/SDL.h>
 
 class Game
@@ -16,6 +17,7 @@ class Game
 	double FPS;
 
 	std::vector<Mesh> mesh;
+	std::vector<Shader> shader;
 
 	public:
 	bool isFPScapped;
