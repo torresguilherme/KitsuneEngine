@@ -1,9 +1,9 @@
 #!/bin/bash
 
 CC="g++"
-CFLAGS=" -no-pie -g3 -std=c++17"
-SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp"
-HDRS="display.hpp game.hpp input.hpp render/mesh.hpp"
+CFLAGS=" -no-pie -Wall -std=c++17"
+SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp render/shader.cpp"
+HDRS="display.hpp game.hpp input.hpp render/mesh.hpp render/shader.hpp"
 BIN=" exec"
 GL_LINKS=" -lGL -lGLEW -lSDL2"
 DB="gdb"
@@ -52,6 +52,6 @@ link()
 	done
 }
 
-build_obj $SRCS
-link $OBJS
+build_obj
+link
 echo "Done!"
