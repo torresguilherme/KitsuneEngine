@@ -4,7 +4,7 @@ Game::Game()
 {
 	screen = new Display(800, 600, "test");
 	input = new Input;
-	isFPScapped = false;
+	isFPScapped = true;
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
@@ -66,10 +66,4 @@ void Game::run()
 void Game::quit()
 {
 	screen->isClosed = true;
-}
-
-static inline void fullDelete(void *ptr)
-{
-	free(ptr);
-	ptr = 0;
 }

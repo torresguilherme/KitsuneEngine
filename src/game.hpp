@@ -30,6 +30,4 @@ class Game
 	void quit();
 };
 
-static inline void fullDelete(void*);
-
 #endif
