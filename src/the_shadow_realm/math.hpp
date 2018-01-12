@@ -8,50 +8,50 @@ inline double rad2deg(double);
 class Vec2
 {
 	public:
-	double x;
-	double y;
+	float x;
+	float y;
 
-	Vec2(double, double);
-	double lenght();
+	Vec2(float, float);
+	float lenght();
 	Vec2 normalize();
-	double distanceTo(Vec2&);
-	Vec2 rotate(double);
+	float distanceTo(Vec2&);
+	Vec2 rotate(float);
 };
 
 Vec2 operator+(const Vec2& a, const Vec2& b);
 Vec2 operator-(const Vec2& a, const Vec2& b);
-Vec2 operator*(const Vec2& a, const double real);
-Vec2 operator/(const Vec2& a, const double real);
-double operator*(const Vec2& a, const Vec2& b);
+Vec2 operator*(const Vec2& a, const float real);
+Vec2 operator/(const Vec2& a, const float real);
+float operator*(const Vec2& a, const Vec2& b);
 
 class Vec3
 {
 	public:
-	double x;
-	double y;
-	double z;
+	float x;
+	float y;
+	float z;
 
-	Vec3(double, double, double);
-	double lenght();
+	Vec3(float, float, float);
+	float lenght();
 	Vec3 normalize();
-	double distanceTo(Vec3&);
+	float distanceTo(Vec3&);
 	Vec3 cross(Vec3&);
 };
 
 Vec3 operator+(const Vec3& a, const Vec3& b);
 Vec3 operator-(const Vec3& a, const Vec3& b);
-Vec3 operator*(const Vec3& a, const double real);
-Vec3 operator/(const Vec3& a, const double real);
-double operator*(const Vec3& a, const Vec3& b);
+Vec3 operator*(const Vec3& a, const float real);
+Vec3 operator/(const Vec3& a, const float real);
+float operator*(const Vec3& a, const Vec3& b);
 
 class Mat4
 {
 	static const int SIZE = 4;
-	double m[SIZE][SIZE];
+	float m[SIZE][SIZE];
 
 	public:
-	double const* operator[](int const) const;
-	double* operator[](int const);
+	float const* operator[](int const) const;
+	float* operator[](int const);
 };	
 
 void makeIdentity(Mat4&);
@@ -60,13 +60,13 @@ Mat4 operator*(const Mat4& a, const Mat4& b);
 class Quaternion
 {
 	public:
-	double x;
-	double y;
-	double z;
-	double w;
+	float x;
+	float y;
+	float z;
+	float w;
 
-	Quaternion(double, double, double, double);
-	double lenght();
+	Quaternion(float, float, float, float);
+	float lenght();
 	Quaternion normalize();
 	Quaternion conjugate();
 };
