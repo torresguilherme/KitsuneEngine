@@ -16,8 +16,8 @@ class Game
 	double frameInterval;
 	double FPS;
 
-	std::vector<Mesh> mesh;
-	std::vector<Shader> shader;
+	//Mesh mesh;
+	//Shader shader;
 
 	public:
 	bool isFPScapped;

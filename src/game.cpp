@@ -4,21 +4,10 @@ Game::Game()
 {
 	screen = new Display(800, 600, "test");
 	input = new Input;
-	isFPScapped = true;
+	isFPScapped = false;
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
-
-	// testing mesh/shaders
-	Vertex vertices[] =
-	{
-		Vertex(glm::vec3(-1.0, -1.0, 0), glm::vec2(0.0, 0.10)),
-		Vertex(glm::vec3(0, 1.0, 0), glm::vec2(5.0, 0.0)),
-		Vertex(glm::vec3(1.0, -1.0, 0), glm::vec2(10.0, 10.0))
-	};
-
-	mesh.push_back(Mesh(vertices, sizeof(vertices) / sizeof(vertices[0])));
-	shader.push_back(Shader("", ""));
 }
 
 Game::~Game()
@@ -29,12 +18,24 @@ Game::~Game()
 
 void Game::run()
 {
+	//mesh and shader testing
+	Vertex vertices[] =
+	{
+		Vertex(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.10)),
+		Vertex(glm::vec3(0, 0.5, 0), glm::vec2(5.0, 0.0)),
+		Vertex(glm::vec3(0.5, -0.5, 0), glm::vec2(10.0, 10.0))
+	};
+
+	Mesh mesh = Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+	Shader shader = Shader("", "");
+	//mesh and shader testing
+
 	while(!screen->isClosed)
 	{
 		screen->clear(0.0f, 0.0f, 0.0f, 1.0f);
 		input->update();
-		mesh[0].draw();
-		shader[0].bind();
+		shader.bind();
+		mesh.draw();
 
 		curFrame = clock();
 		if(isFPScapped)
