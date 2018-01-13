@@ -28,6 +28,8 @@ void Game::run()
 
 	Mesh mesh = Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
 	Shader shader = Shader("", "");
+	shader.addUniform("uni");
+	float var = 0.0;
 	//mesh and shader testing
 
 	while(!screen->isClosed)
@@ -36,6 +38,9 @@ void Game::run()
 		input->update();
 		shader.bind();
 		mesh.draw();
+		// uniform update test
+		shader.setUniformf("uni", sinf(var));
+		var += 0.1;
 
 		curFrame = clock();
 		if(isFPScapped)

@@ -4,6 +4,7 @@
 #include "input.hpp"
 #include "render/mesh.hpp"
 #include "render/shader.hpp"
+#include "cmath"
 #include <SDL2/SDL.h>
 
 class Game

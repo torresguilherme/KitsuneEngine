@@ -1,8 +1,10 @@
-#version 300 es
+#version 130
 
-out lowp vec4 fragColor;
+out vec4 fragColor;
+uniform float uni;
 
 void main()
 {
-  fragColor = vec4(0.0, 1.0, 1.0, 1.0);
+  float alpha = uni;
+  fragColor = vec4(0.0, 1.0, 1.0, alpha);
 }

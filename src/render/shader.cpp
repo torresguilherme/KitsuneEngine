@@ -1,5 +1,6 @@
 #include "shader.hpp"
 using namespace std;
+using namespace glm;
 
 Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShaderFile*/)
 {
@@ -7,7 +8,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
 	if(program == 0)
 	{
 		std::cerr << "error: could not find a valid memory location for the shader program, shader creation failed!" << '\n';
-		exit(5);
+		exit(1);
 	}
 	string aux;
 
@@ -51,6 +52,8 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
 		glAttachShader(program, shaders[i]);
 	}
 
+	glBindAttribLocation(program, 0, "position");
+
 	glLinkProgram(program);
 	CheckShaderError(program, GL_LINK_STATUS, true, "error: the program could not be linked!");
 
@@ -76,6 +79,39 @@ void Shader::bind()
 
 void Shader::update()
 {
+}
+
+void Shader::addUniform(string name)
+{
+	GLuint uniformLocation = glGetUniformLocation(program, name.c_str());
+
+	if(uniformLocation == (GLuint)-1)
+	{
+		cerr<<"error: could not find uniform: "<<name<<endl;
+		exit(1);
+	}
+
+	uniforms.insert(pair<string, GLuint>(name, uniformLocation));
+}
+
+void Shader::setUniformi(string name, int value)
+{
+	glUniform1i(uniforms.find(name)->second, value);
+}
+
+void Shader::setUniformf(string name, float value)
+{
+	glUniform1f(uniforms.find(name)->second, value);
+}
+
+void Shader::setUniformVec3(string name, vec3 value)
+{
+	glUniform3f(uniforms.find(name)->second, value.x, value.y, value.z);
+}
+
+void Shader::setUniformMat4(string name, mat4 value)
+{
+	glUniformMatrix4fv(uniforms.find(name)->second, 1, GL_FALSE, &value[0][0]);
 }
 
 string Shader::LoadBasicShader(int type)
@@ -109,7 +145,7 @@ string Shader::LoadBasicShader(int type)
 	else
 	{
 		cout<<"error: couldn't find the basic shader file"<<endl;
-		exit(2);
+		exit(1);
 	}
 	return output;
 }
@@ -158,7 +194,7 @@ void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const string& 
 			glGetShaderInfoLog(shader, sizeof(error), NULL, error);
 
 		cerr<<errorMessage<<": '"<<error<<"'"<<endl;
-		exit(4);
+		exit(1);
 	}
 }
 
@@ -168,7 +204,7 @@ GLuint CreateShader(const string& text, GLenum shaderType)
 	if(shader == 0)
 	{
 		cerr<<"error: shader creation failed"<<endl;
-		exit(3);
+		exit(1);
 	}
 
 	const GLchar* shaderSourceStrings[1];

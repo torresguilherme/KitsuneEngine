@@ -1,6 +1,6 @@
-#version 300 es
+#version 130
 
-layout (location = 0) in vec3 position;
+in vec3 position;
 
 void main()
 {
