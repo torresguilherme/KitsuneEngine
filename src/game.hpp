@@ -23,6 +23,7 @@ class Game
 	// node handling
 	std::vector<Node> nodes;
 	int nodeNum;
+	int currentScene;
 
 	public:
 	bool isFPScapped;

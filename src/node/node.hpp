@@ -24,9 +24,21 @@ class Node
 	Shader *shader;
 
 	public:
+	// pause mode
+	enum
+	{
+		INHERIT,
+		STOP,
+		PROCESS
+	};
+	int pauseMode;
+
 	Node();
 	virtual ~Node();
 	virtual void update();
+
+	glm::vec3 getPos();
+	void setPos(float, float, float);
 };
 
 #endif

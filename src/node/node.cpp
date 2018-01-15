@@ -22,6 +22,8 @@ mat4 Transform::getTransformation()
 
 Node::Node()
 {
+	pauseMode = INHERIT;
+
 	Vertex vertices [] =
 	{
 		Vertex(vec3(-1.0, -1.0, 0.0), vec2(0.0, 0.0)),
@@ -43,5 +45,18 @@ Node::~Node()
 void Node::update()
 {
 	shader->bind();
+	/*
+	shader->setUniformMat4("transform", transform.getTransformation());
+	 */ 
 	mesh->draw();
+}
+
+vec3 Node::getPos()
+{
+	return transform.translation;
+}
+
+void Node::setPos(float x, float y, float z)
+{
+	transform.translation = vec3(x, y, z);
 }
