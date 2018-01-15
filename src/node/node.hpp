@@ -1,6 +1,7 @@
 #ifndef NODE_HPP_
 #define NODE_HPP_
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
 
@@ -19,11 +20,13 @@ class Transform
 class Node
 {
 	Transform transform;
+	Mesh *mesh;
+	Shader *shader;
 
 	public:
 	Node();
-	~Node();
-	void update();
+	virtual ~Node();
+	virtual void update();
 };
 
 #endif

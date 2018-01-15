@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CC="g++"
-CFLAGS=" -no-pie -Wall -std=c++17"
+CFLAGS="-g3 -no-pie -Wall -std=c++17"
 SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp render/shader.cpp node/node.cpp"
 HDRS="display.hpp game.hpp input.hpp render/mesh.hpp render/shader.hpp"
 BIN=" exec"
