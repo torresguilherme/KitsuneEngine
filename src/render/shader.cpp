@@ -85,7 +85,7 @@ void Shader::addUniform(string name)
 {
 	GLuint uniformLocation = glGetUniformLocation(program, name.c_str());
 
-	if(uniformLocation == (GLuint)-1)
+	if(uniformLocation == GL_INVALID_VALUE)
 	{
 		cerr<<"error: could not find uniform: "<<name<<endl;
 		exit(1);
