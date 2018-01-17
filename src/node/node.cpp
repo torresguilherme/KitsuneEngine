@@ -42,7 +42,11 @@ Node::Node()
 
 	mesh = new Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
 	shader = new Shader("", "");
-	//shader->addUniform("transform");
+	shader->addUniform("transform");
+
+	// transform test
+	count = 0.0;
+	setScale(0.5, 0.5, 0.5);
 }
 
 Node::~Node()
@@ -53,10 +57,13 @@ Node::~Node()
 
 void Node::update()
 {
+	//transform test
+	setPos(sinf(count), 0.0, 0.0);
+	setRot(cosf(count) * 3, cosf(count) * 3, cosf(count) * 3);
+	count += 0.1;
+
 	shader->bind();
-	/*
 	shader->setUniformMat4("transform", transform.getTransformation());
-	 */ 
 	mesh->draw();
 }
 

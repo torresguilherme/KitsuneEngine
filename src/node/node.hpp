@@ -43,6 +43,9 @@ class Node
 	void setRot(float, float, float);
 	glm::vec3 getScale();
 	void setScale(float, float, float);
+
+	// testing
+	float count;
 };
 
 inline double deg2rad(double);
