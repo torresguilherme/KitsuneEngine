@@ -37,10 +37,25 @@ Node::Node()
 	{
 		Vertex(vec3(-1.0, -1.0, 0.0), vec2(0.0, 0.0)),
 		Vertex(vec3(0.0, 1.0, 0.0), vec2(0.0, 0.0)),
-		Vertex(vec3(1.0, -1.0, 0.0), vec2(0.0, 0.0))
+		Vertex(vec3(1.0, -1.0, 0.0), vec2(0.0, 0.0)),
+		Vertex(vec3(0.0, -1.0, 1.0), vec2(0.0, 0.0))
 	};
 
-	mesh = new Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+	vector<int> indices;
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(3);
+	indices.push_back(3);
+	indices.push_back(1);
+	indices.push_back(2);
+	indices.push_back(2);
+	indices.push_back(1);
+	indices.push_back(0);
+	indices.push_back(0);
+	indices.push_back(2);
+	indices.push_back(3);
+
+	mesh = new Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]), indices);
 	shader = new Shader("", "");
 	shader->addUniform("transform");
 
@@ -58,8 +73,8 @@ Node::~Node()
 void Node::update()
 {
 	//transform test
-	setPos(sinf(count), 0.0, 0.0);
-	setRot(cosf(count) * 3, cosf(count) * 3, cosf(count) * 3);
+	//setPos(sinf(count), 0.0, 0.0);
+	setRot(cosf(count) * 1, cosf(count) * 1, cosf(count) * 1);
 	count += 0.1;
 
 	shader->bind();
