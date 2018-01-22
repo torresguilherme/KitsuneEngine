@@ -122,3 +122,26 @@ inline double rad2deg(double radians)
 	return radians * (180.0 / M_PI);
 }
 
+Mesh *loadMesh(string fileName)
+{
+	ifstream file;
+	file.open(fileName.c_str());
+
+	string output;
+	string line;
+
+	if(!file.is_open())
+	{
+		cerr<<"error: could not find mesh file to import: "<<fileName<<endl;
+		exit(1);
+	}
+
+	// import obj
+	Mesh *ret;
+	string ext = fileName.substr(fileName.find_last_of(".") + 1);
+	if(ext == "obj")
+	{
+	}
+
+	return ret;
+}

@@ -50,5 +50,6 @@ class Node
 
 inline double deg2rad(double);
 inline double rad2deg(double);
+Mesh *loadMesh(std::string);
 
 #endif
