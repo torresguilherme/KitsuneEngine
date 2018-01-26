@@ -10,6 +10,7 @@ Game::Game()
 	lastFrame = clock();
 	nodeNum = 1;
 	nodes.emplace_back();
+	nodes[0].mesh = loadMesh("../res/meshes/cube.obj");
 }
 
 Game::~Game()

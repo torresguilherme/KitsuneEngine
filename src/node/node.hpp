@@ -2,6 +2,7 @@
 #define NODE_HPP_
 #include <glm/gtx/transform.hpp>
 #include <iostream>
+#include <sstream>
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
 
@@ -20,10 +21,11 @@ class Transform
 class Node
 {
 	Transform transform;
-	Mesh *mesh;
 	Shader *shader;
 
 	public:
+	Mesh *mesh;
+
 	// pause mode
 	enum
 	{

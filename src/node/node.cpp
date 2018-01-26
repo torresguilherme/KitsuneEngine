@@ -33,29 +33,6 @@ Node::Node()
 {
 	pauseMode = INHERIT;
 
-	Vertex vertices [] =
-	{
-		Vertex(vec3(-1.0, -1.0, 0.0), vec2(0.0, 0.0)),
-		Vertex(vec3(0.0, 1.0, 0.0), vec2(0.0, 0.0)),
-		Vertex(vec3(1.0, -1.0, 0.0), vec2(0.0, 0.0)),
-		Vertex(vec3(0.0, -1.0, 1.0), vec2(0.0, 0.0))
-	};
-
-	vector<int> indices;
-	indices.push_back(0);
-	indices.push_back(1);
-	indices.push_back(3);
-	indices.push_back(3);
-	indices.push_back(1);
-	indices.push_back(2);
-	indices.push_back(2);
-	indices.push_back(1);
-	indices.push_back(0);
-	indices.push_back(0);
-	indices.push_back(2);
-	indices.push_back(3);
-
-	mesh = new Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]), indices);
 	shader = new Shader("", "");
 	shader->addUniform("transform");
 
@@ -127,8 +104,10 @@ Mesh *loadMesh(string fileName)
 	ifstream file;
 	file.open(fileName.c_str());
 
-	string output;
 	string line;
+	vector<Vertex> vertices;
+	vector<int> faceIndexes;
+	float data[4];
 
 	if(!file.is_open())
 	{
@@ -141,7 +120,54 @@ Mesh *loadMesh(string fileName)
 	string ext = fileName.substr(fileName.find_last_of(".") + 1);
 	if(ext == "obj")
 	{
+		while(file.good())
+		{
+			getline(file, line);
+			if(line[0] == 'v')
+			{
+				if(line[1] == 'p')
+				{
+				}
+
+				else if(line[1] == 't')
+				{
+				}
+
+				else if(line[1] == 'n')
+				{
+				}
+
+				else
+				{
+					string aux = line.substr(line.find_first_of(" ") + 1);
+					stringstream ss(aux);
+					for(int i = 0; i < 3; i++)
+					{
+						ss >> data[i];
+					}
+					vertices.push_back(Vertex(vec3(data[0], data[1], data[2]), vec2(0.0, 0.0)));
+				}
+			}
+
+			else if(line[0] == 'f')
+			{
+				string aux = line.substr(line.find_first_of(" ") + 1);
+				stringstream ss(aux);
+				for(int i = 0; i < 4; i++)
+				{
+					ss >> data[i];
+					faceIndexes.push_back(data[i]);
+				}
+			}
+		}
 	}
 
+	else
+	{
+		cerr<<"error: mesh export format is not supported"<<endl;
+		exit(1);
+	}
+
+	ret = new Mesh(vertices.data(), vertices.size(), faceIndexes);
 	return ret;
 }
