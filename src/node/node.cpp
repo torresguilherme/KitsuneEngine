@@ -51,8 +51,8 @@ void Node::update()
 {
 	//transform test
 	//setPos(sinf(count), 0.0, 0.0);
-	setRot(cosf(count) * 1, cosf(count) * 1, cosf(count) * 1);
-	count += 0.1;
+	setRot(0.0, count, 0.0);
+	count += 0.01;
 
 	shader->bind();
 	shader->setUniformMat4("transform", transform.getTransformation());
@@ -144,8 +144,10 @@ Mesh *loadMesh(string fileName)
 					for(int i = 0; i < 3; i++)
 					{
 						ss >> data[i];
+						cout<<data[i]<<' ';
 					}
 					vertices.push_back(Vertex(vec3(data[0], data[1], data[2]), vec2(0.0, 0.0)));
+					cout<<endl;
 				}
 			}
 
@@ -153,11 +155,14 @@ Mesh *loadMesh(string fileName)
 			{
 				string aux = line.substr(line.find_first_of(" ") + 1);
 				stringstream ss(aux);
-				for(int i = 0; i < 4; i++)
+				for(int i = 0; i < 3; i++)
 				{
 					ss >> data[i];
+					data[i]--;
+					cout<<data[i]<<' ';
 					faceIndexes.push_back(data[i]);
 				}
+				cout<<endl;
 			}
 		}
 	}

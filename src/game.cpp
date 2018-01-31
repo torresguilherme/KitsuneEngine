@@ -10,7 +10,7 @@ Game::Game()
 	lastFrame = clock();
 	nodeNum = 1;
 	nodes.emplace_back();
-	nodes[0].mesh = loadMesh("../res/meshes/cube.obj");
+	nodes[0].mesh = loadMesh("../res/meshes/monkey.obj");
 }
 
 Game::~Game()
@@ -53,7 +53,7 @@ void Game::run()
 
 		screen->update();
 		lastFrame = curFrame;
-		std::cout<<curFPS<<std::endl;
+		std::cout<<curFPS<<" FPS"<<std::endl;
 	}
 }
 

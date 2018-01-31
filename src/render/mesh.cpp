@@ -35,6 +35,9 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices, vector<int> indices)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexArrayBuffers[INDEX_VB]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), &indices[0], GL_STATIC_DRAW);
 
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 1, GL_UNSIGNED_INT, GL_FALSE, 0, 0);
+
 	//glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[TEXCOORD_VB]);
 	//glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW);
 
@@ -46,12 +49,14 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices, vector<int> indices)
 
 Mesh::~Mesh()
 {
+	glDeleteBuffers(NUM_BUFFERS, vertexArrayBuffers);
 	glDeleteVertexArrays(1, &vertexArrayObject);
 }
 
 void Mesh::draw()
 {
 	glBindVertexArray(vertexArrayObject);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexArrayBuffers[INDEX_VB]);
 	glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
