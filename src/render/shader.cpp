@@ -104,6 +104,11 @@ void Shader::setUniformf(string name, float value)
 	glUniform1f(uniforms.find(name)->second, value);
 }
 
+void Shader::setUniformVec2(string name, vec2 value)
+{
+	glUniform2f(uniforms.find(name)->second, value.x, value.y);
+}
+
 void Shader::setUniformVec3(string name, vec3 value)
 {
 	glUniform3f(uniforms.find(name)->second, value.x, value.y, value.z);

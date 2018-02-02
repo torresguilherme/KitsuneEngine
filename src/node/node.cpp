@@ -35,6 +35,7 @@ Node::Node()
 
 	shader = new Shader("", "");
 	shader->addUniform("transform");
+	shader->addUniform("u_resolution");
 
 	// transform test
 	count = 0.0;
@@ -47,15 +48,16 @@ Node::~Node()
 	delete shader;
 }
 
-void Node::update()
+void Node::update(double delta)
 {
 	//transform test
 	//setPos(sinf(count), 0.0, 0.0);
 	setRot(0.0, count, 0.0);
-	count += 0.01;
+	count += delta;
 
 	shader->bind();
 	shader->setUniformMat4("transform", transform.getTransformation());
+	shader->setUniformVec2("u_resolution", vec2(640.0, 480.0));
 	mesh->draw();
 }
 
@@ -144,7 +146,6 @@ Mesh *loadMesh(string fileName)
 					for(int i = 0; i < 3; i++)
 					{
 						ss >> data[i];
-						cout<<data[i]<<' ';
 					}
 					vertices.push_back(Vertex(vec3(data[0], data[1], data[2]), vec2(0.0, 0.0)));
 					cout<<endl;
@@ -159,7 +160,6 @@ Mesh *loadMesh(string fileName)
 				{
 					ss >> data[i];
 					data[i]--;
-					cout<<data[i]<<' ';
 					faceIndexes.push_back(data[i]);
 				}
 				cout<<endl;

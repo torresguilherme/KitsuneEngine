@@ -28,7 +28,7 @@ void Game::run()
 		input->update();
 		for(int i = 0; i < nodeNum; i++)
 		{
-			nodes[i].update();
+			nodes[i].update(delta);
 		}
 
 		curFrame = clock();
