@@ -8,6 +8,7 @@
 
 class Vertex
 {
+	// this class is technically useless right now
 	static const int SIZE = 3;
 
 	public:
@@ -33,7 +34,7 @@ class Mesh
 	unsigned int drawCount;
 
 	public:
-	Mesh(Vertex*, unsigned int, std::vector<int>);
+	Mesh(std::vector<glm::vec3>, std::vector<int>, std::vector<glm::vec2>, std::vector<glm::vec3>);
 	virtual ~Mesh();
 	void draw();
 };

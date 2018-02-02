@@ -101,17 +101,21 @@ inline double rad2deg(double radians)
 	return radians * (180.0 / M_PI);
 }
 
-Mesh *loadMesh(string fileName)
+Mesh *loadMesh(string sFileName)
 {
-	ifstream file;
-	file.open(fileName.c_str());
+	const char *fileName = sFileName.c_str();
+	FILE* file;
+	file = fopen(fileName, "r");
 
-	string line;
-	vector<Vertex> vertices;
-	vector<int> faceIndexes;
+	char line[256];
+	vector<vec3> vertices;
+	vector<int> faceIndices;
+	vector<vec2> texCoords;
+	vector<vec3> normals;
 	float data[4];
+	int intData[4];
 
-	if(!file.is_open())
+	if(!file)
 	{
 		cerr<<"error: could not find mesh file to import: "<<fileName<<endl;
 		exit(1);
@@ -119,50 +123,55 @@ Mesh *loadMesh(string fileName)
 
 	// import obj
 	Mesh *ret;
-	string ext = fileName.substr(fileName.find_last_of(".") + 1);
-	if(ext == "obj")
+	const char *ext = &fileName[0];
+	int i = strlen(fileName);
+
+	while(*ext != '\0')
 	{
-		while(file.good())
+		ext++;
+	}
+
+	while(*ext != '.')
+	{
+		if(i <= 0)
 		{
-			getline(file, line);
-			if(line[0] == 'v')
+			cerr<<"error: mesh file does not have an extention"<<endl;
+			exit(1);
+		}
+
+		ext--;
+		i--;
+	}
+
+	if(!strcmp(ext, ".obj"))
+	{
+		while(fscanf(file, "%s", line) != EOF)
+		{
+			if(!strcmp(line, "v"))
 			{
-				if(line[1] == 'p')
-				{
-				}
-
-				else if(line[1] == 't')
-				{
-				}
-
-				else if(line[1] == 'n')
-				{
-				}
-
-				else
-				{
-					string aux = line.substr(line.find_first_of(" ") + 1);
-					stringstream ss(aux);
-					for(int i = 0; i < 3; i++)
-					{
-						ss >> data[i];
-					}
-					vertices.push_back(Vertex(vec3(data[0], data[1], data[2]), vec2(0.0, 0.0)));
-					cout<<endl;
-				}
+				fscanf(file, "%f %f %f\n", &data[0], &data[1], &data[2]);
+				vertices.push_back(vec3(data[0], data[1], data[2]));
 			}
 
-			else if(line[0] == 'f')
+			else if(!strcmp(line, "vt"))
 			{
-				string aux = line.substr(line.find_first_of(" ") + 1);
-				stringstream ss(aux);
+				fscanf(file, "%f %f\n", &data[0], &data[1]);
+				texCoords.push_back(vec2(data[0], data[1]));
+			}
+
+			else if(!strcmp(line, "vn"))
+			{
+				fscanf(file, "%f %f %f\n", &data[0], &data[1], &data[2]);
+				normals.push_back(vec3(data[0], data[1], data[2]));
+			}
+
+			else if(!strcmp(line, "f"))
+			{
+				fscanf(file, "%i %i %i\n", &intData[0], &intData[1], &intData[2]);
 				for(int i = 0; i < 3; i++)
 				{
-					ss >> data[i];
-					data[i]--;
-					faceIndexes.push_back(data[i]);
+					faceIndices.push_back(intData[i] - 1);
 				}
-				cout<<endl;
 			}
 		}
 	}
@@ -173,6 +182,6 @@ Mesh *loadMesh(string fileName)
 		exit(1);
 	}
 
-	ret = new Mesh(vertices.data(), vertices.size(), faceIndexes);
+	ret = new Mesh(vertices, faceIndices, texCoords, normals);
 	return ret;
 }

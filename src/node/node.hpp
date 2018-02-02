@@ -2,7 +2,8 @@
 #define NODE_HPP_
 #include <glm/gtx/transform.hpp>
 #include <iostream>
-#include <sstream>
+#include <cstdlib>
+#include <cstring>
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
 
