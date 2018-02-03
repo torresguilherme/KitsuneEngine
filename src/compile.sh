@@ -1,9 +1,9 @@
 #!/bin/bash
 
 CC="g++"
-CFLAGS="-g3 -no-pie -Wall -std=c++17"
-SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp render/shader.cpp node/node.cpp"
-HDRS="display.hpp game.hpp input.hpp render/mesh.hpp render/shader.hpp"
+CFLAGS="-no-pie -Wall -std=c++17"
+SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp render/shader.cpp node/node.cpp node2d/node2d.cpp"
+HDRS="display.hpp game.hpp input.hpp render/mesh.hpp render/shader.hpp node2d/node2d.hpp"
 BIN=" exec"
 GL_LINKS=" -lGL -lGLEW -lSDL2"
 DB="gdb"

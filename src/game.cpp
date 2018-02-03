@@ -1,23 +1,44 @@
 #include "game.hpp"
 
-Game::Game()
+Game::Game(int width, int height, std::string title, int mode)
 {
-	screen = new Display(800, 600, "test");
+	screen = new Display(width, height, title);
+
+	gameMode = mode;
+	if(gameMode == KITSUNE_2D)
+	{
+		root2d = new Node2D;
+	}
+	else if(gameMode == KITSUNE_3D)
+	{
+		root = new Node;
+		root->mesh = loadMesh("../res/meshes/monkey.obj");
+	}
+	else
+	{
+		std::cerr<<"error: game mode parameter is not valid!"<<std::endl;
+		exit(1);
+	}
+
 	input = new Input;
 	isFPScapped = true;
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
-	nodeNum = 1;
-	nodes.emplace_back();
-	nodes[0].mesh = loadMesh("../res/meshes/monkey.obj");
 }
 
 Game::~Game()
 {
-	nodes.clear();
 	delete screen;
 	delete input;
+	if(gameMode == KITSUNE_3D)
+	{
+		delete root;
+	}
+	else
+	{
+		delete root2d;
+	}
 }
 
 void Game::run()
@@ -26,9 +47,13 @@ void Game::run()
 	{
 		screen->clear(0.0f, 0.0f, 0.0f, 1.0f);
 		input->update();
-		for(int i = 0; i < nodeNum; i++)
+		if(gameMode == KITSUNE_3D)
 		{
-			nodes[i].update(delta);
+			root->update(delta);
+		}
+		else
+		{
+			root2d->update(delta);
 		}
 
 		curFrame = clock();

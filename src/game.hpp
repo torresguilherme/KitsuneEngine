@@ -3,14 +3,17 @@
 #include "display.hpp"
 #include "input.hpp"
 #include "node/node.hpp"
+#include "node2d/node2d.hpp"
 #include <vector>
 #include <iterator>
+
+#define KITSUNE_2D 0
+#define KITSUNE_3D 1
 
 class Game
 {
 	// game components
 	Display* screen;
-	Input* input;
 
 	// FPS handling
 	clock_t lastFrame;
@@ -21,15 +24,17 @@ class Game
 	double curFPS;
 
 	// node handling
-	std::vector<Node> nodes;
-	int nodeNum;
+	int gameMode;
 	int currentScene;
 
 	public:
+	Node* root;
+	Node2D* root2d;
+	Input* input;
 	bool isFPScapped;
 	double delta;
 
-	Game();
+	Game(int, int, std::string, int);
 	~Game();
 	void run();
 	void quit();

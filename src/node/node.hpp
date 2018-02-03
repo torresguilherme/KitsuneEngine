@@ -21,11 +21,10 @@ class Transform
 
 class Node
 {
-	Transform transform;
-	Shader *shader;
-
 	public:
+	Transform transform;
 	Mesh *mesh;
+	Shader *shader;
 
 	// pause mode
 	enum
