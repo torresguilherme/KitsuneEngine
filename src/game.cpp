@@ -47,7 +47,7 @@ Game::Game(int width, int height, std::string title, int mode)
 	}
 
 	input = new Input;
-	isFPScapped = false;
+	isFPScapped = true;
 	FPS = 144.0;
 	frameInterval = 1/FPS;
 	lastFrame = clock();
@@ -104,7 +104,7 @@ void Game::run()
 
 		screen->update();
 		lastFrame = curFrame;
-		std::cout<<curFPS<<" FPS"<<std::endl;
+		std::cout<<delta<<" deltaTime"<<std::endl;
 	}
 }
 

@@ -29,9 +29,8 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <cmath>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+#include "../render/mesh.hpp"
+#include "../render/shader.hpp"
 
 class Node2D
 {
@@ -59,16 +58,24 @@ class Node2D
 
 class Sprite: public Node2D
 {
-	SDL_Surface *texture;
-
+	GLuint texture;
 	public:
+	enum
+	{
+		REPEAT = GL_REPEAT,
+		MIRRORED_REPEAT = GL_MIRRORED_REPEAT,
+		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
+		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
+	};
+
 	Sprite();
 	virtual ~Sprite();
 	virtual void update(double);
+
+	int loadTexture(const char *fileName, int mode);
 };
 
 inline double deg2rad(double);
 inline double rad2deg(double);
-SDL_Surface *loadTexture(std::string);
 
 #endif

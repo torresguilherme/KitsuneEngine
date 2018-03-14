@@ -25,6 +25,7 @@
 /*************************************************************************/
 
 #include "node2d.hpp"
+#include "stb_image.h"
 using namespace std;
 using namespace glm;
 
@@ -83,10 +84,23 @@ Sprite::~Sprite()
 {
 	if(texture)
 	{
-		delete texture;
+		glDeleteTextures(1, &texture);
 	}
 }
 
 void Sprite::update(double delta)
 {
+}
+
+int Sprite::loadTexture(const char *fileName, int mode)
+{
+	if(mode < REPEAT || mode > CLAMP_TO_BORDER)
+	{
+		cerr<<"error: invalid texture mode"<<endl;
+		return 1;
+	}
+
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	return 0;
 }
