@@ -7,6 +7,8 @@ class Sprite: public Node2D
 {
 	GLuint texture;
 	public:
+	int width, height, numComponents;
+
 	enum
 	{
 		REPEAT = GL_REPEAT,

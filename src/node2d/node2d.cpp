@@ -25,7 +25,6 @@
 /*************************************************************************/
 
 #include "node2d.hpp"
-#include "stb_image.h"
 using namespace std;
 using namespace glm;
 
