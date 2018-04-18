@@ -66,6 +66,8 @@ float operator*(const Vec2& a, const Vec2& b)
 	return (a.x * b.x) + (a.y * b.y);
 }
 
+// to do: 2d scale and translation
+
 // VEC3
 
 Vec3::Vec3(float x, float y, float z)
@@ -118,6 +120,8 @@ Vec3 operator/(const Vec3& a, const float real)
 	return Vec3(a.x / real, a.y / real, a.z / real);
 }
 
+// to do: transform operations
+
 // MAT4
 
 float operator*(const Vec3& a, const Vec3& b)
@@ -154,7 +158,22 @@ void makeIdentity(Mat4& matrix)
 	}
 }
 
-// to do: matrix operators
+Mat4 operator*(const Mat4& a, const Mat4& b)
+{
+	Mat4 ret;
+	for(int i = 0; i < Mat4::SIZE; i++)
+	{
+		for(int j = 0; j < Mat4::SIZE; j++)
+		{
+			for(int k = 0; k < Mat4::SIZE; k++)
+			{
+				ret[i][j] += a[k][i] * b[j][k];
+			}
+		}
+	}
+
+	return ret;
+}
 
 // QUATERNION
 

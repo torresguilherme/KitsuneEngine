@@ -1,0 +1,25 @@
+#ifndef SPRITE_HPP_
+#define SPRITE_HPP_
+
+#include "node2d.hpp"
+
+class Sprite: public Node2D
+{
+	GLuint texture;
+	public:
+	enum
+	{
+		REPEAT = GL_REPEAT,
+		MIRRORED_REPEAT = GL_MIRRORED_REPEAT,
+		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
+		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
+	};
+
+	Sprite();
+	virtual ~Sprite();
+	virtual void update(double);
+
+	int loadTexture(const char *fileName, int mode);
+};
+
+#endif

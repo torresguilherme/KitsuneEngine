@@ -56,25 +56,6 @@ class Node2D
 	void setScale(float, float);
 };
 
-class Sprite: public Node2D
-{
-	GLuint texture;
-	public:
-	enum
-	{
-		REPEAT = GL_REPEAT,
-		MIRRORED_REPEAT = GL_MIRRORED_REPEAT,
-		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
-		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
-	};
-
-	Sprite();
-	virtual ~Sprite();
-	virtual void update(double);
-
-	int loadTexture(const char *fileName, int mode);
-};
-
 inline double deg2rad(double);
 inline double rad2deg(double);
 
