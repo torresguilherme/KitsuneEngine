@@ -20,6 +20,7 @@ class Sprite: public Node2D
 	Sprite();
 	virtual ~Sprite();
 	virtual void update(double);
+	virtual void draw();
 
 	int loadTexture(const char *fileName, int mode);
 };

@@ -76,10 +76,12 @@ void Game::run()
 		if(gameMode == KITSUNE_3D)
 		{
 			root->update(delta);
+			root->draw();
 		}
 		else
 		{
 			root2d->update(delta);
+			root2d->draw();
 		}
 
 		curFrame = clock();

@@ -50,6 +50,7 @@ class Node2D
 	Node2D();
 	virtual ~Node2D();
 	virtual void update(double);
+	virtual void draw();
 
 	void setPos(float, float);
 	void rotate(float);

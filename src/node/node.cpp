@@ -80,7 +80,10 @@ void Node::update(double delta)
 	//setPos(sinf(count), 0.0, 0.0);
 	setRot(0.0, count, 0.0);
 	count += delta;
+}
 
+void Node::draw()
+{
 	shader->bind();
 	shader->setUniformMat4("transform", transform.getTransformation());
 	shader->setUniformVec2("u_resolution", vec2(640.0, 480.0));

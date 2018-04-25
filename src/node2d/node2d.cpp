@@ -45,6 +45,10 @@ void Node2D::update(double delta)
 {
 }
 
+void Node2D::draw()
+{
+}
+
 void Node2D::setPos(float x, float y)
 {
 	position = vec2(x, y);

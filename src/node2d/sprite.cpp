@@ -1,4 +1,5 @@
 #include "sprite.hpp"
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 using namespace std;
@@ -22,6 +23,10 @@ Sprite::~Sprite()
 }
 
 void Sprite::update(double delta)
+{
+	}
+
+void Sprite::draw()
 {
 }
 

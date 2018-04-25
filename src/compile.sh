@@ -2,8 +2,8 @@
 
 CC="g++"
 CFLAGS="-no-pie -Wall -std=c++17"
-SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp render/shader.cpp node/node.cpp node2d/node2d.cpp node2d/sprite.cpp"
-HDRS="display.hpp game.hpp input.hpp render/mesh.hpp render/shader.hpp node2d/node2d.hpp node2d/sprite.hpp"
+SRCS="main.cpp display.cpp game.cpp input.cpp render/mesh.cpp render/shader.cpp node/node.cpp node2d/node2d.cpp node2d/sprite.cpp node2d/rect2d.cpp"
+HDRS="display.hpp game.hpp input.hpp render/mesh.hpp render/shader.hpp node2d/node2d.hpp node2d/sprite.hpp node2d/rect2d.hpp"
 BIN=" exec"
 GL_LINKS=" -lGL -lGLEW -lSDL2"
 DB="gdb"
