@@ -9,8 +9,12 @@ class Rect2D: public Node2D
 	int height;
 	glm::vec4 color;
 
+	Mesh *mesh;
+	Shader *shader;
+
 	public:
-	Rect2D(int, int, int, int, int, int);
+	Rect2D(int, int, float, float, float, float);
+	~Rect2D();
 	virtual void update(double);
 	virtual void draw();
 };

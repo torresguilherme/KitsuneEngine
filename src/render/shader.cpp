@@ -140,6 +140,11 @@ void Shader::setUniformVec3(string name, vec3 value)
 	glUniform3f(uniforms.find(name)->second, value.x, value.y, value.z);
 }
 
+void Shader::setUniformVec4(string name, vec4 value)
+{
+	glUniform4f(uniforms.find(name)->second, value.x, value.y, value.z, value.w);
+}
+
 void Shader::setUniformMat4(string name, mat4 value)
 {
 	glUniformMatrix4fv(uniforms.find(name)->second, 1, GL_FALSE, &value[0][0]);

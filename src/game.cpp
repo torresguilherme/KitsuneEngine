@@ -33,7 +33,7 @@ Game::Game(int width, int height, std::string title, int mode)
 	gameMode = mode;
 	if(gameMode == KITSUNE_2D)
 	{
-		root2d = new Node2D;
+		root2d = new Rect2D(1, 1, 1.0, 1.0, 0.0, 1.0);
 	}
 	else if(gameMode == KITSUNE_3D)
 	{

@@ -26,10 +26,7 @@
 
 #ifndef GAME_HPP_
 #define GAME_HPP_
-#include "display.hpp"
-#include "input.hpp"
-#include "node/node.hpp"
-#include "node2d/node2d.hpp"
+#include "kitsune.hpp"
 #include <vector>
 #include <iterator>
 

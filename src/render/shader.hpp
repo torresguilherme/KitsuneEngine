@@ -62,6 +62,7 @@ class Shader
 	void setUniformf(std::string, float);
 	void setUniformVec2(std::string, glm::vec2);
 	void setUniformVec3(std::string, glm::vec3);
+	void setUniformVec4(std::string, glm::vec4);
 	void setUniformMat4(std::string, glm::mat4);
 };
 
