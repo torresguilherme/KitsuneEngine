@@ -62,6 +62,7 @@ Node::Node()
 	shader = new Shader("", "");
 	shader->addUniform("transform");
 	shader->addUniform("u_resolution");
+	shader->addUniform("color");
 
 	// transform test
 	count = 0.0;
@@ -82,10 +83,11 @@ void Node::update(double delta)
 	count += delta;
 }
 
-void Node::draw()
+void Node::draw(mat4 projectionMat, mat4 viewMat)
 {
 	shader->bind();
-	shader->setUniformMat4("transform", transform.getTransformation());
+	shader->setUniformMat4("transform", projectionMat * viewMat * transform.getTransformation());
+	shader->setUniformVec4("color", vec4(1.0, 1.0, 0.0, 1.0));
 	shader->setUniformVec2("u_resolution", vec2(640.0, 480.0));
 	mesh->draw();
 }

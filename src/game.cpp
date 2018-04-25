@@ -26,6 +26,18 @@
 
 #include "game.hpp"
 
+Camera::Camera()
+{
+	position = glm::vec3(4, 3, 3);
+	focus = glm::vec3(0, 0, 0);
+	up = glm::vec3(0, 1, 0);
+}
+
+glm::mat4 Camera::getViewMatrix()
+{
+	return glm::lookAt(position, focus, up);
+}
+
 Game::Game(int width, int height, std::string title, int mode)
 {
 	screen = new Display(width, height, title);
@@ -46,6 +58,8 @@ Game::Game(int width, int height, std::string title, int mode)
 		exit(1);
 	}
 
+	camera = new Camera;
+	projectionMat = glm::perspective(glm::radians(45.0f), (float) width / (float) height, near, far);
 	input = new Input;
 	isFPScapped = true;
 	FPS = 144.0;
@@ -65,6 +79,7 @@ Game::~Game()
 	{
 		delete root2d;
 	}
+	delete camera;
 }
 
 void Game::run()
@@ -76,7 +91,7 @@ void Game::run()
 		if(gameMode == KITSUNE_3D)
 		{
 			root->update(delta);
-			root->draw();
+			root->draw(projectionMat, camera->getViewMatrix());
 		}
 		else
 		{
@@ -106,7 +121,7 @@ void Game::run()
 
 		screen->update();
 		lastFrame = curFrame;
-		std::cout<<delta<<" deltaTime"<<std::endl;
+		//std::cout<<delta<<" deltaTime"<<std::endl;
 	}
 }
 

@@ -7,10 +7,6 @@ using namespace glm;
 
 Sprite::Sprite()
 {
-	position = vec2(0.0, 0.0);
-	rotation = 0.0;
-	scale = vec2(0.0, 0.0);
-
 	pauseMode = INHERIT;
 }
 

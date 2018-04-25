@@ -64,7 +64,7 @@ class Node
 	Node();
 	virtual ~Node();
 	virtual void update(double);
-	virtual void draw();
+	virtual void draw(glm::mat4, glm::mat4);
 
 	glm::vec3 getPos();
 	void setPos(float, float, float);

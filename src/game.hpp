@@ -33,6 +33,17 @@
 #define KITSUNE_2D 0
 #define KITSUNE_3D 1
 
+class Camera
+{
+	public:
+	glm::vec3 position;
+	glm::vec3 focus;
+	glm::vec3 up;
+
+	Camera();
+	glm::mat4 getViewMatrix();
+};
+
 class Game
 {
 	// game components
@@ -49,6 +60,12 @@ class Game
 	// node handling
 	int gameMode;
 	int currentScene;
+
+	// camera
+	Camera *camera;
+	glm::mat4 projectionMat;
+	const float near = 0.1f;
+	const float far = 100.0f;
 
 	public:
 	Node* root;

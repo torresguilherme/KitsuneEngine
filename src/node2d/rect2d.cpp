@@ -4,6 +4,8 @@ using namespace glm;
 
 Rect2D::Rect2D(int width, int height, float red, float blue, float green, float alpha)
 {
+	pauseMode = INHERIT;
+
 	this->width = width;
 	this->height = height;
 	this->color = vec4(red, blue, green, alpha);
@@ -18,8 +20,8 @@ Rect2D::Rect2D(int width, int height, float red, float blue, float green, float 
 
 	vector<int> indices;
 	indices.push_back(0);
-	indices.push_back(1);
 	indices.push_back(2);
+	indices.push_back(1);
 	indices.push_back(2);
 	indices.push_back(3);
 	indices.push_back(1);
@@ -33,7 +35,7 @@ Rect2D::Rect2D(int width, int height, float red, float blue, float green, float 
 	// initializing shader
 	shader = new Shader("", "");
 	shader->addUniform("color");
-	shader->setUniformVec4("color", this->color);
+	shader->addUniform("transform");
 }
 
 Rect2D::~Rect2D()
@@ -49,5 +51,7 @@ void Rect2D::update(double delta)
 void Rect2D::draw()
 {
 	shader->bind();
+	shader->setUniformVec4("color", this->color);
+	shader->setUniformMat4("transform", getTransformation());
 	mesh->draw();
 }

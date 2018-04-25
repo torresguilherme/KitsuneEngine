@@ -27,17 +27,27 @@
 #ifndef NODE2D_HPP_
 #define NODE2D_HPP_
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include <iostream>
 #include <cmath>
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
 
+class Transform2D
+{
+	public:
+	glm::vec3 position;
+	float rotation;
+	glm::vec3 scale;
+
+	Transform2D();
+	glm::mat4 getTransformation();
+};
+
 class Node2D
 {
 	public:
-	glm::vec2 position;
-	float rotation;
-	glm::vec2 scale;
+	Transform2D transform;
 
 	enum
 	{
@@ -55,6 +65,8 @@ class Node2D
 	void setPos(float, float);
 	void rotate(float);
 	void setScale(float, float);
+
+	glm::mat4 getTransformation();
 };
 
 inline double deg2rad(double);
