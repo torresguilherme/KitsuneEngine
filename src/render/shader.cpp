@@ -205,7 +205,7 @@ string LoadShader(string& fileName)
 
 	else
 	{
-		cout<<"couldn't find the shader file!"<<endl;
+		cout<<"attempting to load basic shader file..."<<endl;
 		return "";
 	}
 

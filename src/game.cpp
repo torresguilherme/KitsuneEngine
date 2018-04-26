@@ -94,7 +94,7 @@ void Game::run()
 		if(gameMode == KITSUNE_3D)
 		{
 			root->update(delta);
-			root->draw(projectionMat, camera->getViewMatrix());
+			root->draw(glm::mat4(1.0), projectionMat, camera->getViewMatrix());
 		}
 		else
 		{

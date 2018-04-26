@@ -83,17 +83,18 @@ void Node::update(double delta)
 	count += delta;
 }
 
-void Node::draw(mat4 projectionMat, mat4 viewMat)
+void Node::draw(mat4 fatherMvp, mat4 projectionMat, mat4 viewMat)
 {
 	shader->bind();
-	shader->setUniformMat4("transform", projectionMat * viewMat * transform.getTransformation());
+	mat4 thisMvp = projectionMat * viewMat * transform.getTransformation();
+	shader->setUniformMat4("transform", thisMvp);
 	shader->setUniformVec4("color", vec4(1.0, 1.0, 0.0, 1.0));
 	shader->setUniformVec2("u_resolution", vec2(640.0, 480.0));
 	mesh->draw();
 
 	for(int i = 0; i < children.size(); i++)
 	{
-		children[i].draw(projectionMat, viewMat);
+		children[i].draw(thisMvp, projectionMat, viewMat);
 	}
 }
 
