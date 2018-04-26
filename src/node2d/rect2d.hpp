@@ -13,7 +13,7 @@ class Rect2D: public Node2D
 	Shader *shader;
 
 	public:
-	Rect2D(int, int, float, float, float, float);
+	Rect2D(float, float, float, float, float, float);
 	~Rect2D();
 	virtual void update(double);
 	virtual void draw();

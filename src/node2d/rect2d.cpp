@@ -2,7 +2,7 @@
 using namespace std;
 using namespace glm;
 
-Rect2D::Rect2D(int width, int height, float red, float blue, float green, float alpha)
+Rect2D::Rect2D(float width, float height, float red, float blue, float green, float alpha)
 {
 	pauseMode = INHERIT;
 

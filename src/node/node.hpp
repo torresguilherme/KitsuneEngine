@@ -52,6 +52,8 @@ class Node
 	Mesh *mesh;
 	Shader *shader;
 
+	std::vector<Node> children;
+
 	// pause mode
 	enum
 	{

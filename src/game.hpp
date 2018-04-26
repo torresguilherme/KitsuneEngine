@@ -62,7 +62,9 @@ class Game
 	int currentScene;
 
 	// camera
+	public:
 	Camera *camera;
+	private:
 	glm::mat4 projectionMat;
 	const float near = 0.1f;
 	const float far = 100.0f;

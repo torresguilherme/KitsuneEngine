@@ -28,7 +28,7 @@
 
 int main()
 {
-	Game game(800, 600, "test", KITSUNE_3D);
+	Game game(800, 600, "test", KITSUNE_2D);
 	game.run();
 	return 0;
 }

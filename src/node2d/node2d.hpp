@@ -48,6 +48,7 @@ class Node2D
 {
 	public:
 	Transform2D transform;
+	std::vector<Node2D> children;
 
 	enum
 	{

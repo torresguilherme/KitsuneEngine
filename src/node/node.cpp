@@ -90,6 +90,11 @@ void Node::draw(mat4 projectionMat, mat4 viewMat)
 	shader->setUniformVec4("color", vec4(1.0, 1.0, 0.0, 1.0));
 	shader->setUniformVec2("u_resolution", vec2(640.0, 480.0));
 	mesh->draw();
+
+	for(int i = 0; i < children.size(); i++)
+	{
+		children[i].draw(projectionMat, viewMat);
+	}
 }
 
 vec3 Node::getPos()

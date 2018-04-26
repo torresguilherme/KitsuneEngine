@@ -61,6 +61,10 @@ void Node2D::update(double delta)
 
 void Node2D::draw()
 {
+	for(int i = 0; i < children.size(); i++)
+	{
+		children[i].draw();
+	}
 }
 
 void Node2D::setPos(float x, float y)
