@@ -20,10 +20,10 @@ Rect2D::Rect2D(float width, float height, float red, float blue, float green, fl
 
 	vector<int> indices;
 	indices.push_back(0);
-	indices.push_back(2);
 	indices.push_back(1);
 	indices.push_back(2);
 	indices.push_back(3);
+	indices.push_back(2);
 	indices.push_back(1);
 
 	vector<vec2> texCoords;
