@@ -44,11 +44,6 @@ class Camera
 	glm::mat4 getViewMatrix();
 };
 
-class Camera2D: public Camera
-{
-	Camera2D();
-};
-
 class Game
 {
 	// game components

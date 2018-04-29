@@ -63,8 +63,13 @@ void Node2D::draw()
 {
 	for(int i = 0; i < children.size(); i++)
 	{
-		children[i].draw();
+		children[i]->draw();
 	}
+}
+
+void Node2D::addChild(Node2D* newChild)
+{
+	children.push_back(newChild);
 }
 
 void Node2D::setPos(float x, float y)

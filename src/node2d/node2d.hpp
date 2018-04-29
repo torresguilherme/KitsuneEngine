@@ -48,7 +48,7 @@ class Node2D
 {
 	public:
 	Transform2D transform;
-	std::vector<Node2D> children;
+	std::vector<Node2D*> children;
 
 	enum
 	{
@@ -62,6 +62,7 @@ class Node2D
 	virtual ~Node2D();
 	virtual void update(double);
 	virtual void draw();
+	void addChild(Node2D*);
 
 	void setPos(float, float);
 	void rotate(float);
