@@ -32,7 +32,7 @@ Transform2D::Transform2D()
 {
 	position = vec3(0.0, 0.0, 0.0);
 	rotation = 0.0f;
-	scale = vec3(1.0, 1.0, 1.0);
+	scale = vec3(1.0, 1.0, 0.0);
 }
 
 mat4 Transform2D::getTransformation()

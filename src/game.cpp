@@ -46,14 +46,15 @@ Game::Game(int width, int height, std::string title, int mode)
 	if(gameMode == KITSUNE_2D)
 	{
 		// testing rect
-		root2d = new Rect2D(0.5, 0.5, 1.0, 1.0, 0.0, 1.0);
+		//root2d = new Rect2D(1.0, 1.0, 1.0, 1.0, 0.0, 1.0);
+		root2d = new Node2D;
 
 	}
 	else if(gameMode == KITSUNE_3D)
 	{
 		root = new Node;
 		// testing
-		root->mesh = loadMesh("../res/meshes/monkey.obj");
+		// root->mesh = loadMesh("../res/meshes/monkey.obj");
 	}
 	else
 	{
