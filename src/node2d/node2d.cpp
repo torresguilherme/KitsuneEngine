@@ -53,6 +53,10 @@ Node2D::Node2D()
 
 Node2D::~Node2D()
 {
+	for(unsigned int i = 0; i < children.size(); i++)
+	{
+		delete children[i];
+	}
 }
 
 void Node2D::update(double delta)

@@ -3,4 +3,7 @@
 
 #include "game.hpp"
 
+void initGame(Game&);
+void gameLoop(Game&);
+
 #endif
