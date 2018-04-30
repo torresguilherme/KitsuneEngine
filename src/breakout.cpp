@@ -60,20 +60,19 @@ void gameLoop(Game &game)
 
 		if (game.input->isActionToggled("info"))
 		{
-			// to do: print attributes
 			paused = true;
-			gameCycle(game);
+			gameCycle(game, true);
 		}
 
 		if(!paused)
 		{
-			gameCycle(game);
+			gameCycle(game, false);
 		}
 		game.run();
 	}
 }
 
-void gameCycle(Game &game)
+void gameCycle(Game &game, bool debug)
 {
 	// player position and movement
 	int playerSpeed;
@@ -87,6 +86,11 @@ void gameCycle(Game &game)
 	else if(game.root2d->getNode("player")->transform.position.x >= 1.0)
 	{
 		game.root2d->getNode("player")->transform.position.x = 1.0;
+	}
+
+	if(debug)
+	{
+		std::cout<<"Velocidade do jogador no eixo X: "<<actualPlayerSpeed<<std::endl;
 	}
 
 	//to do: update ball position w collisions
