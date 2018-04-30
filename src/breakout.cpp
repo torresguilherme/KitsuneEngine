@@ -1,16 +1,18 @@
 #include "breakout.hpp"
 
-void initGame(Game &game)
+void initGame(Game &game, CollisionLayer &c)
 {
 	// init player
-	Rect2D *player = new Rect2D(0.25, 0.1, 1.0, 0.0, 0.0, 1.0);
+	Rect2D *player = new Rect2D(0.2, 0.1, 1.0, 0.0, 0.0, 1.0);
 	player->setPos(0.0, -0.8);
 	player->name = "player";
+	c.colliders.push_back(player);
 	game.root2d->addChild(player);
 
 	// init ball
 	Rect2D *ball = new Rect2D(0.05, 0.05, 0.0, 1.0, 0.0, 1.0);
 	game.root2d->addChild(ball);
+	c.colliders.push_back(ball);
 	ball->name = "ball";
 
 	// init bricks
@@ -24,6 +26,7 @@ void initGame(Game &game)
 			Rect2D *newBrick = new Rect2D(0.19, 0.09, 0.0, 1.0, 1.0, 1.0);
 			newBrick->setPos(-0.9 + (0.2 * j), 0.95 - (0.1 * i));
 			newBrick->name = "brick";
+			c.colliders.push_back(newBrick);
 			bricksFather->addChild(newBrick);
 		}
 	}
@@ -35,9 +38,11 @@ void initGame(Game &game)
 	game.input->insertNewAction("info", SDL_SCANCODE_RIGHT);
 }
 
-void gameLoop(Game &game)
+void gameLoop(Game &game, CollisionLayer &c)
 {
 	bool paused = true;
+	float ballDirectionX = 0.01;
+	float ballDirectionY = 0.005;
 	while(!game.screen->isClosed)
 	{
 		// update player input
@@ -49,7 +54,8 @@ void gameLoop(Game &game)
 		if (game.input->isActionToggled("reset"))
 		{
 			game.root2d->freeChildren();
-			initGame(game);
+			c.colliders.clear();
+			initGame(game, c);
 			std::cout<<"jogo resetado"<<std::endl;
 		}
 
@@ -61,18 +67,18 @@ void gameLoop(Game &game)
 		if (game.input->isActionToggled("info"))
 		{
 			paused = true;
-			gameCycle(game, true);
+			gameCycle(game, true, c, ballDirectionX, ballDirectionY);
 		}
 
 		if(!paused)
 		{
-			gameCycle(game, false);
+			gameCycle(game, false, c, ballDirectionX, ballDirectionY);
 		}
 		game.run();
 	}
 }
 
-void gameCycle(Game &game, bool debug)
+void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float &ballDirY)
 {
 	// player position and movement
 	int playerSpeed;
@@ -90,8 +96,54 @@ void gameCycle(Game &game, bool debug)
 
 	if(debug)
 	{
+		std::cout<<"Posicao do jogador: x = "<<game.root2d->getNode("player")->transform.position.x<<std::endl;
 		std::cout<<"Velocidade do jogador no eixo X: "<<actualPlayerSpeed<<std::endl;
 	}
 
-	//to do: update ball position w collisions
+	// update ball position w collisions
+	Node2D *ball = game.root2d->getNode("ball");
+	ball->transform.position.x += ballDirX;
+	for (unsigned int i = 0; i < c.colliders.size(); i++)
+	{
+		if(c.colliders[i] != NULL
+		&& abs(ball->transform.position.x - c.colliders[i]->transform.position.x) < 0.1
+		&& abs(ball->transform.position.y - c.colliders[i]->transform.position.y) < 0.05
+		&& ball != c.colliders[i])
+		{
+			ballDirX = -ballDirX;
+			if (c.colliders[i]->name == "brick")
+			{
+				game.root2d->getNode("bricksFather")->removeChild(c.colliders[i]);
+				c.colliders.erase(c.colliders.begin()+i);
+			}
+		}
+	}
+
+	ball->transform.position.y += ballDirY;
+	for (unsigned int i = 0; i < c.colliders.size(); i++)
+	{
+		if(c.colliders[i] != NULL
+		&& abs(ball->transform.position.y - c.colliders[i]->transform.position.y) < 0.05
+		&& abs(ball->transform.position.x - c.colliders[i]->transform.position.x) < 0.1
+		&& ball != c.colliders[i])
+		{
+			ballDirY = -ballDirY;
+			if (c.colliders[i]->name == "brick")
+			{
+				game.root2d->getNode("bricksFather")->removeChild(c.colliders[i]);
+				c.colliders.erase(c.colliders.begin()+i);
+			}
+		}
+	}
+
+	// check collision with borders
+	if(ball->transform.position.x > 1.0 || ball->transform.position.x < -1.0)
+	{
+		ballDirX = -ballDirX;
+	}
+
+	if(ball->transform.position.y > 1.0)
+	{
+		ballDirY = -ballDirY;
+	}
 }

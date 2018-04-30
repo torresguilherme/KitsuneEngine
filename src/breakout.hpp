@@ -3,8 +3,13 @@
 
 #include "game.hpp"
 
-void initGame(Game&);
-void gameLoop(Game&);
-void gameCycle(Game&, bool);
+typedef struct CollisionLayer
+{
+	std::vector<Rect2D*> colliders; 
+};
+
+void initGame(Game&, CollisionLayer&);
+void gameLoop(Game&, CollisionLayer&);
+void gameCycle(Game&, bool, CollisionLayer&, float&, float&);
 
 #endif

@@ -88,6 +88,19 @@ Node2D* Node2D::getNode(string nodeName)
 	return NULL;
 }
 
+void Node2D::removeChild(Node2D *pointer)
+{
+	for(vector<Node2D*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		if((*it) == pointer)
+		{
+			delete (*it);
+			children.erase(it);
+			break;
+		}
+	}
+}
+
 void Node2D::freeChildren()
 {
 	for(unsigned int i = 0; i < children.size(); i++)

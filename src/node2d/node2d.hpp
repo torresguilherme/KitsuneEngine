@@ -66,6 +66,7 @@ class Node2D
 	virtual void draw();
 	void addChild(Node2D*);
 	Node2D* getNode(std::string);
+	void removeChild(Node2D*);
 	void freeChildren();
 
 	void setPos(float, float);

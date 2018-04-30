@@ -4,7 +4,8 @@ int main()
 {
 	Game game(800, 600, "Breakout", KITSUNE_2D);
 
-	initGame(game);
-	gameLoop(game);
+	CollisionLayer c;
+	initGame(game, c);
+	gameLoop(game, c);
 	return 0;
 }
