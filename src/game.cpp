@@ -88,8 +88,8 @@ Game::~Game()
 
 void Game::run()
 {
-	while(!screen->isClosed)
-	{
+//	while(!screen->isClosed)
+//	{
 		screen->clear(0.0f, 0.0f, 0.0f, 1.0f);
 		input->update();
 		if(gameMode == KITSUNE_3D)
@@ -126,7 +126,7 @@ void Game::run()
 		screen->update();
 		lastFrame = curFrame;
 		//std::cout<<delta<<" deltaTime"<<std::endl;
-	}
+//	}
 }
 
 void Game::quit()

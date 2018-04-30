@@ -47,9 +47,11 @@ class Camera
 class Game
 {
 	// game components
+	public:
 	Display* screen;
 
 	// FPS handling
+	private:
 	clock_t lastFrame;
 	clock_t curFrame;
 	double curFrameInterval;

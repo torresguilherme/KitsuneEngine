@@ -46,6 +46,8 @@ class Input
 	void insertNewAction(std::string, SDL_Scancode);
 	bool isActionToggled(std::string);
 	bool isActionPressed(std::string);
+
+	void getMousePos(float*, float*);
 };
 
 #endif
