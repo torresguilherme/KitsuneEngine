@@ -139,6 +139,7 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 			else if(c.colliders[i]->name == "player")
 			{
 				ballDirX -= actualPlayerSpeed;
+				ballDirY += actualPlayerSpeed;
 			}
 		}
 	}
@@ -153,6 +154,11 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 	{
 		ballDirY = -ballDirY;
 	}
+
+	if (ballDirX > 0.1)
+		ballDirX = 0.1;
+	if (ballDirY > 0.1)
+		ballDirY = 0.1;
 
 	if(debug)
 	{
