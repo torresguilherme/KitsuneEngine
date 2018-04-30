@@ -55,6 +55,8 @@ void gameLoop(Game &game, CollisionLayer &c)
 		{
 			game.root2d->freeChildren();
 			c.colliders.clear();
+			ballDirectionX = 0.01;
+			ballDirectionY = 0.005;
 			initGame(game, c);
 			std::cout<<"jogo resetado"<<std::endl;
 		}
@@ -133,6 +135,11 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 				game.root2d->getNode("bricksFather")->removeChild(c.colliders[i]);
 				c.colliders.erase(c.colliders.begin()+i);
 			}
+
+			else if(c.colliders[i]->name == "player")
+			{
+				ballDirX -= actualPlayerSpeed;
+			}
 		}
 	}
 
@@ -145,5 +152,11 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 	if(ball->transform.position.y > 1.0)
 	{
 		ballDirY = -ballDirY;
+	}
+
+	if(debug)
+	{
+		std::cout<<"Posicao da bola: x = "<<ball->transform.position.x;
+		std::cout<<" y = "<<ball->transform.position.y<<std::endl;
 	}
 }
