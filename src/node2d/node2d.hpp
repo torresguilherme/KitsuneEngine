@@ -63,6 +63,7 @@ class Node2D
 	virtual void update(double);
 	virtual void draw();
 	void addChild(Node2D*);
+	void freeChildren();
 
 	void setPos(float, float);
 	void rotate(float);

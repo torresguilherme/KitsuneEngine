@@ -76,6 +76,16 @@ void Node2D::addChild(Node2D* newChild)
 	children.push_back(newChild);
 }
 
+void Node2D::freeChildren()
+{
+	for(unsigned int i = 0; i < children.size(); i++)
+	{
+		free(children[i]);
+	}
+
+	children.clear();
+}
+
 void Node2D::setPos(float x, float y)
 {
 	transform.position = vec3(x, y, 0.0);

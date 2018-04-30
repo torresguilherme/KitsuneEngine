@@ -5,5 +5,6 @@
 
 void initGame(Game&);
 void gameLoop(Game&);
+void gameCycle(Game&);
 
 #endif

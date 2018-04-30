@@ -87,7 +87,7 @@ bool Input::isActionPressed(string action)
 	}
 }
 
-void getMousePos(int* x, int* y)
+void Input::getMousePos(int* x, int* y)
 {
 	SDL_GetMouseState(x, y);
 }

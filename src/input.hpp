@@ -47,7 +47,7 @@ class Input
 	bool isActionToggled(std::string);
 	bool isActionPressed(std::string);
 
-	void getMousePos(float*, float*);
+	void getMousePos(int*, int*);
 };
 
 #endif

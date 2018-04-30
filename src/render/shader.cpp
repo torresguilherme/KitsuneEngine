@@ -47,7 +47,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
 	{
 		shaders[0] = CreateShader(LoadBasicShader(0), GL_VERTEX_SHADER);
 	}
-	cout<<"vertex shader created successfully"<<endl;
+//	cout<<"vertex shader created successfully"<<endl;
 
 	aux = LoadShader(fragShaderFile);
 	if(aux != "")
@@ -58,7 +58,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
 	{
 		shaders[1] = CreateShader(LoadBasicShader(1), GL_FRAGMENT_SHADER);
 	}
-	cout<<"fragment shader created successfully"<<endl;
+//	cout<<"fragment shader created successfully"<<endl;
 
 	/*
 	   aux = LoadShader(geomShaderFile);
@@ -205,7 +205,7 @@ string LoadShader(string& fileName)
 
 	else
 	{
-		cout<<"attempting to load basic shader file..."<<endl;
+//		cout<<"attempting to load basic shader file..."<<endl;
 		return "";
 	}
 

@@ -35,9 +35,48 @@ void gameLoop(Game &game)
 {
 	while(!game.screen->isClosed)
 	{
+		bool paused = false;
 		// update player input
-		// update player movement
-		// update ball movement w/ collision
+		if (game.input->isActionToggled("quit"))
+		{
+			game.screen->isClosed = true;
+		}
+
+		if (game.input->isActionToggled("reset"))
+		{
+			game.root2d->freeChildren();
+			initGame(game);
+			std::cout<<"jogo resetado"<<std::endl;
+		}
+
+		if (game.input->isActionToggled("pauseUnpause"))
+		{
+			paused = !paused;
+		}
+
+		if (game.input->isActionToggled("info"))
+		{
+			// to do: print attributes
+			paused = true;
+			gameCycle(game);
+		}
+
+		if(!paused)
+		{
+			gameCycle(game);
+		}
 		game.run();
 	}
+}
+
+void gameCycle(Game &game)
+{
+	//to do: update player position and movement
+	
+	int playerSpeed;
+	game.input->getMousePos(&playerSpeed, NULL);
+	float actualPlayerSpeed = (float)(playerSpeed - 400) / 2000;
+	game.root2d->children[0]->transform.position.x += actualPlayerSpeed;
+
+	//to do: update ball position w collisions
 }
