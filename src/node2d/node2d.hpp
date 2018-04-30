@@ -29,6 +29,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <iostream>
+#include <iterator>
 #include <cmath>
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
@@ -47,6 +48,7 @@ class Transform2D
 class Node2D
 {
 	public:
+	std::string name;
 	Transform2D transform;
 	std::vector<Node2D*> children;
 
@@ -63,6 +65,7 @@ class Node2D
 	virtual void update(double);
 	virtual void draw();
 	void addChild(Node2D*);
+	Node2D* getNode(std::string);
 	void freeChildren();
 
 	void setPos(float, float);

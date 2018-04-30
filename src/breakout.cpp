@@ -5,21 +5,25 @@ void initGame(Game &game)
 	// init player
 	Rect2D *player = new Rect2D(0.25, 0.1, 1.0, 0.0, 0.0, 1.0);
 	player->setPos(0.0, -0.8);
+	player->name = "player";
 	game.root2d->addChild(player);
 
 	// init ball
 	Rect2D *ball = new Rect2D(0.05, 0.05, 0.0, 1.0, 0.0, 1.0);
 	game.root2d->addChild(ball);
+	ball->name = "ball";
 
 	// init bricks
 	Node2D *bricksFather = new Node2D;
 	game.root2d->addChild(bricksFather);
+	bricksFather->name = "bricksFather";
 	for(int i = 0; i < 3; i++)
 	{
 		for(int j = 0; j < 10; j++)
 		{
 			Rect2D *newBrick = new Rect2D(0.19, 0.09, 0.0, 1.0, 1.0, 1.0);
 			newBrick->setPos(-0.9 + (0.2 * j), 0.95 - (0.1 * i));
+			newBrick->name = "brick";
 			bricksFather->addChild(newBrick);
 		}
 	}
@@ -33,9 +37,9 @@ void initGame(Game &game)
 
 void gameLoop(Game &game)
 {
+	bool paused = true;
 	while(!game.screen->isClosed)
 	{
-		bool paused = false;
 		// update player input
 		if (game.input->isActionToggled("quit"))
 		{
@@ -71,12 +75,19 @@ void gameLoop(Game &game)
 
 void gameCycle(Game &game)
 {
-	//to do: update player position and movement
-	
+	// player position and movement
 	int playerSpeed;
 	game.input->getMousePos(&playerSpeed, NULL);
 	float actualPlayerSpeed = (float)(playerSpeed - 400) / 2000;
-	game.root2d->children[0]->transform.position.x += actualPlayerSpeed;
+	game.root2d->getNode("player")->transform.position.x += actualPlayerSpeed;
+	if(game.root2d->getNode("player")->transform.position.x <= -1.0)
+	{
+		game.root2d->getNode("player")->transform.position.x = -1.0;
+	}
+	else if(game.root2d->getNode("player")->transform.position.x >= 1.0)
+	{
+		game.root2d->getNode("player")->transform.position.x = 1.0;
+	}
 
 	//to do: update ball position w collisions
 }

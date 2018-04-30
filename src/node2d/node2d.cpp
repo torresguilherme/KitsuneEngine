@@ -26,21 +26,20 @@
 
 #include "node2d.hpp"
 using namespace std;
-using namespace glm;
 
 Transform2D::Transform2D()
 {
-	position = vec3(0.0, 0.0, 0.0);
+	position = glm::vec3(0.0, 0.0, 0.0);
 	rotation = 0.0f;
-	scale = vec3(1.0, 1.0, 0.0);
+	scale = glm::vec3(1.0, 1.0, 0.0);
 }
 
-mat4 Transform2D::getTransformation()
+glm::mat4 Transform2D::getTransformation()
 {
-	mat4 m_transformation(1.0);
+	glm::mat4 m_transformation(1.0);
 	m_transformation = glm::translate(m_transformation, this->position);
-	mat4 m_rotation = glm::rotate(rotation, vec3(0.0, 0.0, 1.0));
-	mat4 m_scale(1.0);
+	glm::mat4 m_rotation = glm::rotate(rotation, glm::vec3(0.0, 0.0, 1.0));
+	glm::mat4 m_scale(1.0);
 	m_scale = glm::scale(m_scale, this->scale);
 
 	return m_transformation * m_rotation * m_scale;
@@ -76,6 +75,19 @@ void Node2D::addChild(Node2D* newChild)
 	children.push_back(newChild);
 }
 
+Node2D* Node2D::getNode(string nodeName)
+{
+	for(vector<Node2D*>::iterator i = children.begin(); i !=children.end(); i++)
+	{
+		if((*i)->name == nodeName)
+		{
+			return (*i);
+		}
+	}
+
+	return NULL;
+}
+
 void Node2D::freeChildren()
 {
 	for(unsigned int i = 0; i < children.size(); i++)
@@ -88,7 +100,7 @@ void Node2D::freeChildren()
 
 void Node2D::setPos(float x, float y)
 {
-	transform.position = vec3(x, y, 0.0);
+	transform.position = glm::vec3(x, y, 0.0);
 }
 
 void Node2D::rotate(float degrees)
@@ -98,10 +110,10 @@ void Node2D::rotate(float degrees)
 
 void Node2D::setScale(float x, float y)
 {
-	transform.scale = vec3(x, y, 0.0);
+	transform.scale = glm::vec3(x, y, 0.0);
 }
 
-mat4 Node2D::getTransformation()
+glm::mat4 Node2D::getTransformation()
 {
 	return transform.getTransformation();
 }
