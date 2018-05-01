@@ -82,6 +82,9 @@ void gameLoop(Game &game, CollisionLayer &c)
 
 void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float &ballDirY)
 {
+	// to do: difficulty levels
+	// to do: undestructible bricks
+	// to do: ost?
 	// player position and movement
 	int playerSpeed;
 	game.input->getMousePos(&playerSpeed, NULL);
@@ -139,7 +142,7 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 			else if(c.colliders[i]->name == "player")
 			{
 				ballDirX -= actualPlayerSpeed;
-				ballDirY += actualPlayerSpeed;
+				ballDirY += abs(actualPlayerSpeed);
 			}
 		}
 	}
@@ -155,10 +158,16 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 		ballDirY = -ballDirY;
 	}
 
+	// use max speed
 	if (ballDirX > 0.1)
 		ballDirX = 0.1;
 	if (ballDirY > 0.1)
 		ballDirY = 0.1;
+
+	if (ballDirX < -0.1)
+		ballDirX = -0.1;
+	if (ballDirY < -0.1)
+		ballDirY = -0.1;
 
 	if(debug)
 	{
