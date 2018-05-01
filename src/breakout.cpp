@@ -1,9 +1,11 @@
 #include "breakout.hpp"
+#include <ctime>
 
-void initGame(Game &game, CollisionLayer &c)
+void initGame(Game &game, CollisionLayer &c, int lines)
 {
+	srand(time(NULL));
 	// init player
-	Rect2D *player = new Rect2D(0.2, 0.1, 1.0, 0.0, 0.0, 1.0);
+	Rect2D *player = new Rect2D(0.19, 0.09, 1.0, 0.0, 0.0, 1.0);
 	player->setPos(0.0, -0.8);
 	player->name = "player";
 	c.colliders.push_back(player);
@@ -19,15 +21,32 @@ void initGame(Game &game, CollisionLayer &c)
 	Node2D *bricksFather = new Node2D;
 	game.root2d->addChild(bricksFather);
 	bricksFather->name = "bricksFather";
-	for(int i = 0; i < 3; i++)
+
+	Node2D *hardBricksFather = new Node2D;
+	game.root2d->addChild(hardBricksFather);
+	hardBricksFather->name = "hardBricksFather";
+	for(int i = 0; i < lines; i++)
 	{
 		for(int j = 0; j < 10; j++)
 		{
-			Rect2D *newBrick = new Rect2D(0.19, 0.09, 0.0, 1.0, 1.0, 1.0);
-			newBrick->setPos(-0.9 + (0.2 * j), 0.95 - (0.1 * i));
-			newBrick->name = "brick";
-			c.colliders.push_back(newBrick);
-			bricksFather->addChild(newBrick);
+			// gera tijolo normal
+			if(rand()%6 > 0)
+			{
+				Rect2D *newBrick = new Rect2D(0.19, 0.09, 0.0, 1.0, 1.0, 1.0);
+				newBrick->setPos(-0.9 + (0.2 * j), 0.95 - (0.1 * i));
+				newBrick->name = "brick";
+				c.colliders.push_back(newBrick);
+				bricksFather->addChild(newBrick);
+			}
+			// tijolo indestrutivel
+			else
+			{
+				Rect2D *newBrick = new Rect2D(0.19, 0.09, 1.0, 0.0, 1.0, 1.0);
+				newBrick->setPos(-0.9 + (0.2 * j), 0.95 - (0.1 * i));
+				newBrick->name = "hardBrick";
+				c.colliders.push_back(newBrick);
+				hardBricksFather->addChild(newBrick);
+			}
 		}
 	}
 
@@ -38,14 +57,14 @@ void initGame(Game &game, CollisionLayer &c)
 	game.input->insertNewAction("info", SDL_SCANCODE_RIGHT);
 }
 
-void gameLoop(Game &game, CollisionLayer &c)
+void gameLoop(Game &game, CollisionLayer &c, int lines)
 {
 	bool paused = true;
 	float ballDirectionX = 0.01;
 	float ballDirectionY = 0.005;
 	while(!game.screen->isClosed)
 	{
-		// update player input
+		// update no player input
 		if (game.input->isActionToggled("quit"))
 		{
 			game.screen->isClosed = true;
@@ -57,7 +76,7 @@ void gameLoop(Game &game, CollisionLayer &c)
 			c.colliders.clear();
 			ballDirectionX = 0.01;
 			ballDirectionY = 0.005;
-			initGame(game, c);
+			initGame(game, c, lines);
 			std::cout<<"jogo resetado"<<std::endl;
 		}
 
@@ -77,15 +96,25 @@ void gameLoop(Game &game, CollisionLayer &c)
 			gameCycle(game, false, c, ballDirectionX, ballDirectionY);
 		}
 		game.run();
+
+		// reseta em uma dificuldade maior se todos os tijolos forem destruidos
+		if(game.root2d->getNode("bricksFather")->children.size() == 0)
+		{
+			lines++;
+			game.root2d->freeChildren();
+			c.colliders.clear();
+			ballDirectionX = 0.01;
+			ballDirectionY = 0.005;
+			initGame(game, c, lines);
+			std::cout<<"jogo resetado"<<std::endl;
+		}
 	}
 }
 
 void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float &ballDirY)
 {
-	// to do: difficulty levels
-	// to do: undestructible bricks
 	// to do: ost?
-	// player position and movement
+	// movimento do player
 	int playerSpeed;
 	game.input->getMousePos(&playerSpeed, NULL);
 	float actualPlayerSpeed = (float)(playerSpeed - 400) / 2000;
@@ -105,7 +134,7 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 		std::cout<<"Velocidade do jogador no eixo X: "<<actualPlayerSpeed<<std::endl;
 	}
 
-	// update ball position w collisions
+	// movimento da bola com colisoes
 	Node2D *ball = game.root2d->getNode("ball");
 	ball->transform.position.x += ballDirX;
 	for (unsigned int i = 0; i < c.colliders.size(); i++)
@@ -147,7 +176,7 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 		}
 	}
 
-	// check collision with borders
+	// checa colisao com as bordas da tela
 	if(ball->transform.position.x > 1.0 || ball->transform.position.x < -1.0)
 	{
 		ballDirX = -ballDirX;
@@ -158,7 +187,7 @@ void gameCycle(Game &game, bool debug, CollisionLayer &c, float &ballDirX, float
 		ballDirY = -ballDirY;
 	}
 
-	// use max speed
+	// limite de velocidade
 	if (ballDirX > 0.1)
 		ballDirX = 0.1;
 	if (ballDirY > 0.1)

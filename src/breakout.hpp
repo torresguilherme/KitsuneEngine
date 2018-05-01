@@ -8,8 +8,8 @@ typedef struct CollisionLayer
 	std::vector<Rect2D*> colliders; 
 };
 
-void initGame(Game&, CollisionLayer&);
-void gameLoop(Game&, CollisionLayer&);
+void initGame(Game&, CollisionLayer&, int lines);
+void gameLoop(Game&, CollisionLayer&, int lines);
 void gameCycle(Game&, bool, CollisionLayer&, float&, float&);
 
 #endif
