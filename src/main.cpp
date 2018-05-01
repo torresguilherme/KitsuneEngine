@@ -1,11 +1,11 @@
-#include "breakout.hpp"
+#include "game.hpp"
 
 int main()
 {
-	Game game(800, 600, "Breakout", KITSUNE_2D);
-
-	CollisionLayer c;
-	initGame(game, c, 3);
-	gameLoop(game, c, 3);
+	Game game(800, 600, "KE testing", KITSUNE_2D);
+	while(!game.screen->isClosed)
+	{
+		game.run();
+	}
 	return 0;
 }
