@@ -61,12 +61,15 @@ Node::Node()
 
 	shader = new Shader("", "");
 	shader->addUniform("transform");
-	shader->addUniform("u_resolution");
 	shader->addUniform("color");
 
+	colorR = 1.0;
+	colorG = 1.0;
+	colorB = 1.0;
+	colorA = 1.0;
+
 	// transform test
-	count = 0.0;
-	setScale(0.5, 0.5, 0.5);
+	//setScale(0.5, 0.5, 0.5);
 }
 
 Node::~Node()
@@ -79,22 +82,24 @@ void Node::update(double delta)
 {
 	//transform test
 	//setPos(sinf(count), 0.0, 0.0);
-	setRot(0.0, count, 0.0);
-	count += delta;
 }
 
 void Node::draw(mat4 fatherMvp, mat4 projectionMat, mat4 viewMat)
 {
-	shader->bind();
 	mat4 thisMvp = projectionMat * viewMat * transform.getTransformation();
-	shader->setUniformMat4("transform", thisMvp);
-	shader->setUniformVec4("color", vec4(1.0, 1.0, 0.0, 1.0));
-	shader->setUniformVec2("u_resolution", vec2(640.0, 480.0));
-	mesh->draw();
+	if(shader)
+	{
+		shader->bind();
+		shader->setUniformMat4("transform", thisMvp);
+		shader->setUniformVec4("color", vec4(colorR, colorG, colorB, colorA));
+	}
+
+	if(mesh)
+		mesh->draw();
 
 	for(int i = 0; i < children.size(); i++)
 	{
-		children[i].draw(thisMvp, projectionMat, viewMat);
+		children[i]->draw(thisMvp, projectionMat, viewMat);
 	}
 }
 

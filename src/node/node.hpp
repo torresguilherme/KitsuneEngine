@@ -52,7 +52,9 @@ class Node
 	Mesh *mesh;
 	Shader *shader;
 
-	std::vector<Node> children;
+	std::vector<Node*> children;
+
+	float colorR, colorG, colorB, colorA;
 
 	// pause mode
 	enum
@@ -76,7 +78,7 @@ class Node
 	void setScale(float, float, float);
 
 	// testing
-	float count;
+	//float count;
 };
 
 inline double deg2rad(double);
