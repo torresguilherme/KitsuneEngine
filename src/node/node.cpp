@@ -76,32 +76,67 @@ Node::~Node()
 {
 	delete mesh;
 	delete shader;
+	if (hasScript)
+	{
+		lua_close(state);
+	}
 }
 
 void Node::update(double delta)
 {
-	//transform test
-	//setPos(sinf(count), 0.0, 0.0);
+	if(hasScript)
+	{
+		lua_getglobal(state, "_update");
+		lua_pcall(state, 0, LUA_MULTRET, 0);
+	}
+
+	for(int i = 0; i < children.size(); i++)
+	{
+		children[i]->update(delta);
+	}
 }
 
 void Node::draw(mat4 fatherMvp, mat4 projectionMat, mat4 viewMat)
 {
 	mat4 thisMvp = projectionMat * viewMat * transform.getTransformation();
-	if(shader)
-	{
-		shader->bind();
-		shader->setUniformMat4("transform", thisMvp);
-		shader->setUniformVec4("color", vec4(colorR, colorG, colorB, colorA));
-	}
+	shader->bind();
+	shader->setUniformMat4("transform", thisMvp);
+	shader->setUniformVec4("color", vec4(colorR, colorG, colorB, colorA));
 
 	if(mesh)
+	{
 		mesh->draw();
+	}
 
 	for(int i = 0; i < children.size(); i++)
 	{
 		children[i]->draw(thisMvp, projectionMat, viewMat);
 	}
 }
+
+int Node::attachScript(string fileName)
+{
+	state = luaL_newstate();
+	luaL_openlibs(state);
+	// register API functions
+	
+	int s = luaL_loadfile(state, fileName.c_str());
+	if(s == LUA_OK)
+	{
+		lua_pcall(state, 0, LUA_MULTRET, 0);
+		hasScript = true;
+	}
+
+	else
+	{
+		cerr<<"Error: "<<lua_tostring(state, -1)<<endl;
+		lua_pop(state, 1);
+	}
+}
+
+/*
+ * LUA API FUNCTIONS
+ */
 
 vec3 Node::getPos()
 {
@@ -132,6 +167,10 @@ void Node::setScale(float x, float y, float z)
 {
 	transform.scale = vec3(x, y, z);
 }
+
+/*
+ * END
+ */
 
 inline double deg2rad(double degrees)
 {

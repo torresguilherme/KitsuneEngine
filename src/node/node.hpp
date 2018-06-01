@@ -30,6 +30,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <lua5.2/lua.hpp>
+
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
 
@@ -47,6 +49,9 @@ class Transform
 
 class Node
 {
+	lua_State *state;
+	bool hasScript;
+
 	public:
 	Transform transform;
 	Mesh *mesh;
@@ -70,15 +75,18 @@ class Node
 	virtual void update(double);
 	virtual void draw(glm::mat4, glm::mat4, glm::mat4);
 
+	int attachScript(std::string);
+
+	/*
+	 * LUA API FUNCTIONS
+	 */
+
 	glm::vec3 getPos();
 	void setPos(float, float, float);
 	glm::vec3 getRot();
 	void setRot(float, float, float);
 	glm::vec3 getScale();
 	void setScale(float, float, float);
-
-	// testing
-	//float count;
 };
 
 inline double deg2rad(double);
