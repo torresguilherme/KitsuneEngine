@@ -74,8 +74,18 @@ Node::Node()
 
 Node::~Node()
 {
-	delete mesh;
+	if(mesh)
+	{
+		delete mesh;
+	}
+
 	delete shader;
+
+	if(texture)
+	{
+		delete texture;
+	}
+
 	if (hasScript)
 	{
 		lua_close(state);
@@ -84,6 +94,7 @@ Node::~Node()
 
 void Node::update(double delta)
 {
+	setRot(getRot().x + delta, 0, 0);
 	if(hasScript)
 	{
 		lua_getglobal(state, "_update");
@@ -102,6 +113,11 @@ void Node::draw(mat4 fatherMvp, mat4 projectionMat, mat4 viewMat)
 	shader->bind();
 	shader->setUniformMat4("transform", thisMvp);
 	shader->setUniformVec4("color", vec4(colorR, colorG, colorB, colorA));
+
+	if(texture)
+	{
+		texture->bind(0);
+	}
 
 	if(mesh)
 	{
@@ -191,10 +207,15 @@ Mesh *loadMesh(string sFileName)
 	char line[256];
 	vector<vec3> vertices;
 	vector<int> faceIndices;
+	vector<int> vertexIndices;
+	vector<int> uvIndices;
+	vector<int> normalIndices;
 	vector<vec2> texCoords;
 	vector<vec3> normals;
 	float data[4];
-	int intData[4];
+	int vI[3];
+	int uvI[3];
+	int nI[3];
 
 	if(!file)
 	{
@@ -248,10 +269,17 @@ Mesh *loadMesh(string sFileName)
 
 			else if(!strcmp(line, "f"))
 			{
-				fscanf(file, "%i %i %i\n", &intData[0], &intData[1], &intData[2]);
+				int matches = fscanf(file, "%i/%i/%i %i/%i/%i %i/%i/%i\n", &vI[0], &uvI[0], &nI[0], &vI[1], &uvI[1], &nI[1], &vI[2], &uvI[2], &nI[2]);
+				if(matches != 9)
+				{
+					cerr<<"Error:can't load the obj file with the given export options, please try something else"<<endl;
+					return NULL;
+				}
 				for(int i = 0; i < 3; i++)
 				{
-					faceIndices.push_back(intData[i] - 1);
+					vertexIndices.push_back(vI[i] - 1);
+					uvIndices.push_back(uvI[i] - 1);
+					normalIndices.push_back(nI[i] - 1);
 				}
 			}
 		}
@@ -263,6 +291,12 @@ Mesh *loadMesh(string sFileName)
 		exit(1);
 	}
 
-	ret = new Mesh(vertices, faceIndices, texCoords, normals);
+	ret = new Mesh(vertices, vertexIndices, texCoords, uvIndices, normals, normalIndices);
+	return ret;
+}
+
+Texture *loadTexture(string fileName)
+{
+	Texture *ret = new Texture(fileName);
 	return ret;
 }

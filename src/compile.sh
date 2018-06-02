@@ -1,16 +1,16 @@
 #!/bin/bash
 
 CC="g++"
-CFLAGS="-no-pie -Wall -std=c++17"
+CFLAGS="-g3 -no-pie -Wall -std=c++17"
 SRCS="main.cpp
 display.cpp game.cpp input.cpp 
-render/mesh.cpp render/shader.cpp 
+render/mesh.cpp render/shader.cpp render/texture.cpp
 node/node.cpp 
-node2d/node2d.cpp node2d/sprite.cpp node2d/rect2d.cpp"
+node2d/node2d.cpp node2d/sprite.cpp"
 HDRS="display.hpp game.hpp input.hpp
-render/mesh.hpp render/shader.hpp
-node2d/node2d.hpp
-node2d/sprite.hpp node2d/rect2d.hpp"
+render/mesh.hpp render/shader.hpp render/texture.hpp
+node/node.hpp
+node2d/node2d.hpp node2d/sprite.hpp"
 BIN=" exec"
 GL_LINKS=" -lGL -lGLEW -lSDL2 -llua5.2"
 DB="gdb"

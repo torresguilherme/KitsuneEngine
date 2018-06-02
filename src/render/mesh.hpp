@@ -50,7 +50,7 @@ class Mesh
 	{
 		POSITION_VB,
 		INDEX_VB,
-		//TEXCOORD_VB,
+		TEXCOORD_VB,
 		NUM_BUFFERS
 	};
 
@@ -60,7 +60,7 @@ class Mesh
 	unsigned int drawCount;
 
 	public:
-	Mesh(std::vector<glm::vec3>, std::vector<int>, std::vector<glm::vec2>, std::vector<glm::vec3>);
+	Mesh(std::vector<glm::vec3>, std::vector<int>, std::vector<glm::vec2>, std::vector<int>, std::vector<glm::vec3>, std::vector<int>);
 	virtual ~Mesh();
 	void draw();
 };

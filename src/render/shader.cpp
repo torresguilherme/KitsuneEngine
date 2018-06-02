@@ -79,6 +79,7 @@ Shader::Shader(string vertShaderFile, string fragShaderFile/*, string geomShader
 	}
 
 	glBindAttribLocation(program, 0, "position");
+	glBindAttribLocation(program, 2, "texCoord");
 
 	glLinkProgram(program);
 	CheckShaderError(program, GL_LINK_STATUS, true, "error: the program could not be linked!");

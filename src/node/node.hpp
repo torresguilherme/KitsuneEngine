@@ -34,6 +34,7 @@
 
 #include "../render/mesh.hpp"
 #include "../render/shader.hpp"
+#include "../render/texture.hpp"
 
 class Transform
 {
@@ -56,6 +57,7 @@ class Node
 	Transform transform;
 	Mesh *mesh;
 	Shader *shader;
+	Texture *texture;
 
 	std::vector<Node*> children;
 
@@ -92,5 +94,6 @@ class Node
 inline double deg2rad(double);
 inline double rad2deg(double);
 Mesh *loadMesh(std::string);
+Texture *loadTexture(std::string);
 
 #endif

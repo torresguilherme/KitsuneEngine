@@ -1,6 +1,6 @@
 #include "sprite.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "../render/stb_image.h"
 
 using namespace std;
 using namespace glm;
