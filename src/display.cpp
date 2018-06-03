@@ -65,7 +65,6 @@ Display::Display(unsigned int width, unsigned int height, const std::string& tit
 	glDepthFunc(GL_LESS);
 
 	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CW);
 	glCullFace(GL_BACK);
 	// to do: depth clamp
 
