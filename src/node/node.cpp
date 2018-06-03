@@ -247,6 +247,8 @@ Mesh *loadMesh(string sFileName)
 
 	if(!strcmp(ext, ".obj"))
 	{
+		bool hasUVs = false;
+		bool hasNormals = false;
 		while(fscanf(file, "%s", line) != EOF)
 		{
 			if(!strcmp(line, "v"))
@@ -257,12 +259,14 @@ Mesh *loadMesh(string sFileName)
 
 			else if(!strcmp(line, "vt"))
 			{
+				hasUVs = true;
 				fscanf(file, "%f %f\n", &data[0], &data[1]);
 				texCoords.push_back(vec2(data[0], data[1]));
 			}
 
 			else if(!strcmp(line, "vn"))
 			{
+				hasNormals = false;
 				fscanf(file, "%f %f %f\n", &data[0], &data[1], &data[2]);
 				normals.push_back(vec3(data[0], data[1], data[2]));
 			}

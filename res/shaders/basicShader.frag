@@ -8,5 +8,5 @@ varying vec2 texCoord0;
 
 void main()
 {
-        gl_FragColor = texture2D(diffuse, texCoord0);//color;
+        gl_FragColor = vec4(color * texture2D(diffuse, texCoord0));
 }
