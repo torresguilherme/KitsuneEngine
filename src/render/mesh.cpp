@@ -63,6 +63,27 @@ Mesh::Mesh(vector<vec3> positions, vector<int> vertexIndices,  vector<vec2> texC
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
+	//store uv indices
+	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[UV_INDEX_B]);
+	glBufferData(GL_ARRAY_BUFFER, uvIndices.size() * sizeof(uvIndices[0]), &uvIndices[0], GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 1, GL_UNSIGNED_INT, GL_FALSE, 0, 0);
+
+	// store normals
+	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[NORMALS_B]);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(normals[0]), &normals[0], GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	// store normal indices
+	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[NORMAL_INDEX_B]);
+	glBufferData(GL_ARRAY_BUFFER, normalIndices.size() * sizeof(normalIndices[0]), &normalIndices[0], GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 1, GL_UNSIGNED_INT, GL_FALSE, 0, 0);
+
 	glBindVertexArray(0);
 }
 

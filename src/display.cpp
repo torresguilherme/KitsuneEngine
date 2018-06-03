@@ -62,6 +62,8 @@ Display::Display(unsigned int width, unsigned int height, const std::string& tit
 	}
 
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CW);
 	glCullFace(GL_BACK);

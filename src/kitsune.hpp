@@ -9,4 +9,3 @@
 #include "node/node.hpp"
 #include "node2d/node2d.hpp"
 #include "node2d/sprite.hpp"
-#include "node2d/rect2d.hpp"

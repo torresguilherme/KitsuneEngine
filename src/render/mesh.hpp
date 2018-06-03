@@ -51,6 +51,9 @@ class Mesh
 		POSITION_VB,
 		INDEX_VB,
 		TEXCOORD_VB,
+		UV_INDEX_B,
+		NORMALS_B,
+		NORMAL_INDEX_B,
 		NUM_BUFFERS
 	};
 

@@ -94,7 +94,7 @@ Node::~Node()
 
 void Node::update(double delta)
 {
-	setRot(getRot().x + delta, 0, 0);
+	setRot(0, getRot().y + delta, 0);
 	if(hasScript)
 	{
 		lua_getglobal(state, "_update");
@@ -270,11 +270,13 @@ Mesh *loadMesh(string sFileName)
 			else if(!strcmp(line, "f"))
 			{
 				int matches = fscanf(file, "%i/%i/%i %i/%i/%i %i/%i/%i\n", &vI[0], &uvI[0], &nI[0], &vI[1], &uvI[1], &nI[1], &vI[2], &uvI[2], &nI[2]);
+
 				if(matches != 9)
 				{
 					cerr<<"Error:can't load the obj file with the given export options, please try something else"<<endl;
 					return NULL;
 				}
+				
 				for(int i = 0; i < 3; i++)
 				{
 					vertexIndices.push_back(vI[i] - 1);
