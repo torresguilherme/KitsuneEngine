@@ -34,7 +34,7 @@ Vertex::Vertex(const vec3 pos, const vec2 texCoord)
 	this->texCoord = texCoord;
 }
 
-Mesh::Mesh(vector<vec3> positions, vector<int> vertexIndices,  vector<vec2> texCoords, vector<int> uvIndices, vector<vec3> normals, vector<int> normalIndices)
+Mesh::Mesh(vector<vec3> positions, vector<int> vertexIndices, vector<vec2> texCoords, vector<int> uvIndices, vector<vec3> normals, vector<int> normalIndices)
 {
 	drawCount = vertexIndices.size();
 	glGenVertexArrays(1, &vertexArrayObject);

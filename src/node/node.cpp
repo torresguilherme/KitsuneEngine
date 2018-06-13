@@ -68,6 +68,8 @@ Node::Node()
 	colorB = 1.0;
 	colorA = 1.0;
 
+	hasScript = false;
+
 	// transform test
 	//setScale(0.5, 0.5, 0.5);
 }
