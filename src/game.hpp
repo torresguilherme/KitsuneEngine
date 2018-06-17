@@ -49,6 +49,7 @@ class Game
 	// game components
 	public:
 	Display* screen;
+	CollisionLayer layer0;
 
 	// FPS handling
 	private:

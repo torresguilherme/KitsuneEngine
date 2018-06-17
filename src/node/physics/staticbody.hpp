@@ -1,7 +1,6 @@
 #ifndef STATICBODY_HPP_
 #define STATICBODY_HPP_
 #include "physics.hpp"
-#include "../../game.hpp"
 
 class StaticBody: public Node
 {
@@ -16,7 +15,7 @@ class StaticBody: public Node
 
 	StaticBody();
 	~StaticBody();
-	int addCollider(int);
+	int addCollider(int, CollisionLayer&);
 };
 
 #endif

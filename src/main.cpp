@@ -17,7 +17,7 @@ int main()
 	// instantiate arena
 	StaticBody *ground = new StaticBody();
 	game.root->addChild(ground);
-	ground->addCollider(ground->BOX_COL);
+	ground->addCollider(ground->BOX_COL, game.layer0);
 	ground->mesh = loadMesh("../res/meshes/arena.obj");
 	ground->texture = loadTexture("../res/textures/rocks.jpeg");
 
