@@ -7,12 +7,15 @@ const int S_WIDTH = 1040;
 int main()
 {
 	Game game(S_WIDTH, S_HEIGHT, "KE testing", KITSUNE_3D);
+	srand(time(NULL));
 	//instantiate player
 	KinematicBody *player = new KinematicBody();
 	game.root->addChild(player);
 	player->mesh = loadMesh("../res/meshes/tank.obj");
 	player->texture = loadTexture("../res/textures/camouflage.jpg");
 	float playerSpeed = 0.1;
+	int playerHp = 5;
+	int killCount = 0;
 	player->setPos(player->getPos().x, player->getPos().y + 0.5, player->getPos().z);
 
 	Node *shootPoint = new Node();
@@ -36,6 +39,28 @@ int main()
 	game.input->insertNewAction("left", SDL_SCANCODE_A);
 	game.input->insertNewAction("right", SDL_SCANCODE_D);
 	game.input->insertNewAction("shoot", SDL_SCANCODE_RETURN);
+
+	// enemies
+	vector<KinematicBody*> enemies;
+	vector<glm::vec3> enemyDirections;
+	vector<int> enemyHp;
+	float enemySpeed = 0.05;
+	int maxEnemies = 3;
+	bool started = false;
+	float lastSpawn = 0;
+	float spawnCooldown = 0.5;
+
+	// enemy spawn spots
+	vector<glm::vec3> spots;
+	spots.push_back(glm::vec3(8.0, 1.0, 8.0));
+	spots.push_back(glm::vec3(-8.0, 1.0, 8.0));
+	spots.push_back(glm::vec3(8.0, 1.0, -8.0));
+	spots.push_back(glm::vec3(-8.0, 1.0, -8.0));
+	spots.push_back(glm::vec3(8.0, 1.0, 4.0));
+	spots.push_back(glm::vec3(4.0, 1.0, 8.0));
+	spots.push_back(glm::vec3(-4.0, 1.0, 8.0));
+	spots.push_back(glm::vec3(8.0, 1.0, -4.0));
+	spots.push_back(glm::vec3(-8.0, 1.0, -4.0));
 
 	while(!game.screen->isClosed)
 	{
@@ -65,7 +90,7 @@ int main()
 		if(player->getPos().z < -8.0)
 			player->setPos(player->getPos().x, player->getPos().y, -8.0);
 		game.camera->focus = player->getPos();
-		game.camera->position = player->getPos() + glm::vec3(8, 6, 6);
+		game.camera->position = player->getPos() + glm::vec3(10, 7, 7);
 
 		// update player shooting
 		if(game.input->isActionPressed("shoot"))
@@ -93,8 +118,75 @@ int main()
 		}
 
 		// instantiate enemies
+		if(enemies.size() == 0 && started)
+		{
+			// nova fase com mais dificuldade
+			started = false;
+			lastSpawn = 0;
+			maxEnemies++;
+			player->setPos(0.0, 1.0, 0.0);
+
+		}
+		else if(enemies.size() < maxEnemies)
+		{
+			if(lastSpawn <= 0)
+			{
+				KinematicBody *newEnemy = new KinematicBody();
+				newEnemy->mesh = loadMesh("../res/meshes/large-sphere.obj");
+				newEnemy->texture = loadTexture("../res/textures/red.jpg");
+
+				int ind = rand() % spots.size();
+				game.root->addChild(newEnemy);
+				newEnemy->setPos(spots[ind].x, spots[ind].y, spots[ind].z);
+
+				enemyDirections.push_back(player->getGlobalPos(game.root) - newEnemy->getGlobalPos(game.root));
+				enemyHp.push_back(5);
+				enemies.push_back(newEnemy);
+
+				lastSpawn = spawnCooldown;
+			}
+			else
+			{
+				lastSpawn -= 0.01;
+			}
+			started = true;
+		}
+
 		// update enemy positions
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			for(int j = 1; j < player->children.size(); j++)
+			{
+				// update enemy damage
+				if(glm::distance(player->children[j]->getPos(), enemies[i]->getPos()) < 1.0)
+				{
+					player->removeChild(player->children[j]);
+					directions.erase(directions.begin() + j-1);
+					distances.erase(distances.begin() + j-1);
+					enemyHp[i]--;
+				}
+			}
+
+			if(enemyHp[i] <= 0)
+			{
+				game.root->removeChild(enemies[i]);
+				enemies.erase(enemies.begin() + i);
+				enemyDirections.erase(enemyDirections.begin() + i);
+				enemyHp.erase(enemyHp.begin() + i);
+				killCount++;
+			}
+			
+			// update player damage
+		}
+
+		// game over
+		if(playerHp <= 0)
+		{
+			game.screen->isClosed = true;
+		}
 		game.run();
 	}
+
+	std::cout<<"Inimigos abatidos: "<<killCount<<std::endl;
 	return 0;
 }
