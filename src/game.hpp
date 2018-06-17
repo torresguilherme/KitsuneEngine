@@ -44,16 +44,6 @@ class Camera
 	glm::mat4 getViewMatrix();
 };
 
-class CollisionLayer
-{
-	public:
-	std::vector<CollisionShape*> colliders;
-
-	void addNew(CollisionShape*);
-	int remove(CollisionShape*);
-	void clear();
-};
-
 class Game
 {
 	// game components

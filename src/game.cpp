@@ -38,31 +38,6 @@ glm::mat4 Camera::getViewMatrix()
 	return glm::lookAt(position, focus, up);
 }
 
-void CollisionLayer::addNew(CollisionShape* newShape)
-{
-	colliders.push_back(newShape);
-}
-
-int CollisionLayer::remove(CollisionShape* tbr)
-{
-	for(unsigned int i = 0; i < colliders.size(); i++)
-	{
-		if(colliders[i] = tbr)
-		{
-			colliders.erase(colliders.begin()+i);
-			return 0;
-		}
-	}
-
-	std::cout<<"Collider shape to be removed not found"<<std::endl;
-	return 1;
-}
-
-void CollisionLayer::clear()
-{
-	colliders.clear();
-}
-
 Game::Game(int width, int height, std::string title, int mode)
 {
 	screen = new Display(width, height, title);
