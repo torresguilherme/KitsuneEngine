@@ -1,8 +1,8 @@
 #include "game.hpp"
 
 using namespace std;
-const int S_HEIGHT = 900;
-const int S_WIDTH = 1600;
+const int S_HEIGHT = 600;
+const int S_WIDTH = 1040;
 
 int main()
 {
@@ -17,7 +17,8 @@ int main()
 
 	Node *shootPoint = new Node();
 	player->addChild(shootPoint);
-	shootPoint->transform.translation = glm::vec3(0.0, 1.0, 2.0);
+	shootPoint->transform.translation = glm::vec3(0.0, 0.0, 2.0);
+	float bulletSpeed = 0.5;
 
 	vector<glm::vec3> directions;
 	vector<float> distances;
@@ -73,12 +74,26 @@ int main()
 			newBullet->mesh = loadMesh("../res/meshes/small-sphere.obj");
 			newBullet->texture = loadTexture("../res/textures/yellow.jpg");
 			newBullet->setPos(shootPoint->getGlobalPos(game.root).x, shootPoint->getGlobalPos(game.root).y, shootPoint->getGlobalPos(game.root).z);
+			newBullet->name = "bullet";
+			directions.push_back(glm::normalize(shootPoint->getGlobalPos(game.root) - player->getGlobalPos(game.root)));
+			distances.push_back(0.0);
 			player->addChild(newBullet);
+		}
+
+		for(int i = 1; i < player->children.size(); i++)
+		{
+			player->children[i]->move(directions[i-1] * bulletSpeed);
+			distances[i-1] += bulletSpeed;
+			if(distances[i-1] > 10.0)
+			{
+				player->removeChild(player->children[i]);
+				distances.erase(distances.begin() + i-1);
+				directions.erase(directions.begin() + i-1);
+			}
 		}
 
 		// instantiate enemies
 		// update enemy positions
-		// enemy-bullet collisions
 		game.run();
 	}
 	return 0;

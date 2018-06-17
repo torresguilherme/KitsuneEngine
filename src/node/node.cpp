@@ -199,13 +199,19 @@ vec3 Node::getPos()
 vec3 Node::getGlobalPos(Node* root)
 {
 	mat4 globalMatrix =  getGlobalMatrix(root);
-	return vec3(globalMatrix[0][3], globalMatrix[1][3], globalMatrix[2][3]);
+	return vec3(globalMatrix[3][0], globalMatrix[3][1], globalMatrix[3][2]);
 }
 
 void Node::setPos(float x, float y, float z)
 {
 	transform.translation = vec3(x, y, z);
 }
+
+void Node::move(vec3 dir)
+{
+	setPos(getPos().x + dir.x, getPos().y + dir.y, getPos().z + dir.z);
+}
+
 
 vec3 Node::getRot()
 {

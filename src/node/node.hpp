@@ -91,6 +91,7 @@ class Node
 	glm::vec3 getPos();
 	glm::vec3 getGlobalPos(Node*);
 	void setPos(float, float, float);
+	void move(glm::vec3);	
 	glm::vec3 getRot();
 	void setRot(float, float, float);
 	glm::vec3 getScale();
