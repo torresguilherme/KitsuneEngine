@@ -1,5 +1,6 @@
 #include "game.hpp"
 
+using namespace std;
 const int S_HEIGHT = 900;
 const int S_WIDTH = 1600;
 
@@ -17,7 +18,9 @@ int main()
 	Node *shootPoint = new Node();
 	player->addChild(shootPoint);
 	shootPoint->transform.translation = glm::vec3(0.0, 1.0, 2.0);
-	shootPoint->mesh = loadMesh("../res/meshes/cube.obj");
+
+	vector<glm::vec3> directions;
+	vector<float> distances;
 
 	// instantiate arena
 	StaticBody *ground = new StaticBody();
@@ -64,9 +67,18 @@ int main()
 		game.camera->position = player->getPos() + glm::vec3(8, 6, 6);
 
 		// update player shooting
+		if(game.input->isActionPressed("shoot"))
+		{
+			KinematicBody *newBullet = new KinematicBody();
+			newBullet->mesh = loadMesh("../res/meshes/small-sphere.obj");
+			newBullet->texture = loadTexture("../res/textures/yellow.jpg");
+			newBullet->setPos(shootPoint->getGlobalPos(game.root).x, shootPoint->getGlobalPos(game.root).y, shootPoint->getGlobalPos(game.root).z);
+			player->addChild(newBullet);
+		}
+
 		// instantiate enemies
 		// update enemy positions
-		// update bullet physics
+		// enemy-bullet collisions
 		game.run();
 	}
 	return 0;

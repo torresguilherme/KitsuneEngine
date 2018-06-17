@@ -61,6 +61,7 @@ class Node
 
 	std::string name;
 	std::vector<Node*> children;
+	Node *parent;
 
 	float colorR, colorG, colorB, colorA;
 
@@ -86,7 +87,9 @@ class Node
 	 * LUA API FUNCTIONS
 	 */
 
+	glm::mat4 getGlobalMatrix(Node*);
 	glm::vec3 getPos();
+	glm::vec3 getGlobalPos(Node*);
 	void setPos(float, float, float);
 	glm::vec3 getRot();
 	void setRot(float, float, float);

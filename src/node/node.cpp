@@ -156,6 +156,7 @@ int Node::attachScript(string fileName)
 void Node::addChild(Node *newChild)
 {
 	children.push_back(newChild);
+	newChild->parent = this;
 }
 
 int Node::removeChild(Node *child)
@@ -164,6 +165,7 @@ int Node::removeChild(Node *child)
 	{
 		if(children[i] == child)
 		{
+			free(children[i]);
 			children.erase(children.begin()+i);
 			return 0;
 		}
@@ -177,9 +179,27 @@ int Node::removeChild(Node *child)
  * LUA API FUNCTIONS
  */
 
+mat4 Node::getGlobalMatrix(Node *root)
+{
+	if(this == root)
+	{
+		return transform.getTransformation();
+	}
+	else
+	{
+		return parent->getGlobalMatrix(root) * transform.getTransformation();
+	}
+}
+
 vec3 Node::getPos()
 {
 	return transform.translation;
+}
+
+vec3 Node::getGlobalPos(Node* root)
+{
+	mat4 globalMatrix =  getGlobalMatrix(root);
+	return vec3(globalMatrix[0][3], globalMatrix[1][3], globalMatrix[2][3]);
 }
 
 void Node::setPos(float x, float y, float z)
