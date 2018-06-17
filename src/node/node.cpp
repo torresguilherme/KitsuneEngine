@@ -96,7 +96,6 @@ Node::~Node()
 
 void Node::update(double delta)
 {
-	setRot(0, getRot().y + delta, 0);
 	if(hasScript)
 	{
 		lua_getglobal(state, "_update");
@@ -150,6 +149,26 @@ int Node::attachScript(string fileName)
 		cerr<<"Error: "<<lua_tostring(state, -1)<<endl;
 		lua_pop(state, 1);
 	}
+}
+
+void Node::addChild(Node *newChild)
+{
+	children.push_back(newChild);
+}
+
+int Node::removeChild(Node *child)
+{
+	for(unsigned int i = 0; i < children.size(); i++)
+	{
+		if(children[i] == child)
+		{
+			children.erase(children.begin()+i);
+			return 0;
+		}
+	}
+
+	cout<<"Child to be removed not found"<<endl;
+	return 1;
 }
 
 /*

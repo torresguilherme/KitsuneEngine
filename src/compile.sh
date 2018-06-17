@@ -6,10 +6,12 @@ SRCS="main.cpp
 display.cpp game.cpp input.cpp 
 render/mesh.cpp render/shader.cpp render/texture.cpp
 node/node.cpp 
+node/physics/staticbody.cpp
 node2d/node2d.cpp node2d/sprite.cpp"
 HDRS="display.hpp game.hpp input.hpp
 render/mesh.hpp render/shader.hpp render/texture.hpp
 node/node.hpp
+node/physics/staticbody.hpp
 node2d/node2d.hpp node2d/sprite.hpp"
 BIN=" exec"
 GL_LINKS=" -lGL -lGLEW -lSDL2 -llua5.2"

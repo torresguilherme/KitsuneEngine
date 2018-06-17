@@ -59,6 +59,7 @@ class Node
 	Shader *shader;
 	Texture *texture;
 
+	std::string name;
 	std::vector<Node*> children;
 
 	float colorR, colorG, colorB, colorA;
@@ -78,6 +79,8 @@ class Node
 	virtual void draw(glm::mat4, glm::mat4, glm::mat4);
 
 	int attachScript(std::string);
+	void addChild(Node*);
+	int removeChild(Node*);
 
 	/*
 	 * LUA API FUNCTIONS
