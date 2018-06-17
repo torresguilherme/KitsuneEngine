@@ -51,6 +51,9 @@ Game::Game(int width, int height, std::string title, int mode)
 	else if(gameMode == KITSUNE_3D)
 	{
 		root = new Node;
+		root->transform.translation = glm::vec3(0.0, 0.0, 0.0);
+		root->transform.rotation = glm::vec3(0.0, 0.0, 0.0);
+		root->transform.scale = glm::vec3(1.0, 1.0, 1.0);
 	}
 	else
 	{
@@ -91,7 +94,7 @@ void Game::run()
 		if(gameMode == KITSUNE_3D)
 		{
 			root->update(delta);
-			root->draw(glm::mat4(1.0), projectionMat, camera->getViewMatrix());
+			root->draw(root->transform.getTransformation(), projectionMat, camera->getViewMatrix());
 		}
 		else
 		{

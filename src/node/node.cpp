@@ -69,6 +69,8 @@ Node::Node()
 	colorA = 1.0;
 
 	hasScript = false;
+	mesh = NULL;
+	texture = NULL;
 
 	// transform test
 	//setScale(0.5, 0.5, 0.5);

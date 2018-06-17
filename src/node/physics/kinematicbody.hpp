@@ -8,6 +8,7 @@ class KinematicBody: public StaticBody
 	KinematicBody();
 	~KinematicBody();
 
+	void move(glm::vec3);
 	void moveAndCollide(glm::vec3);
 };
 

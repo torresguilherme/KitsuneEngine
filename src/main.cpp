@@ -7,12 +7,17 @@ int main()
 {
 	Game game(S_WIDTH, S_HEIGHT, "KE testing", KITSUNE_3D);
 	//instantiate player
-	Node *player = new Node();
+	KinematicBody *player = new KinematicBody();
 	game.root->addChild(player);
 	player->mesh = loadMesh("../res/meshes/tank.obj");
 	player->texture = loadTexture("../res/textures/camouflage.jpg");
 	float playerSpeed = 0.1;
 	player->setPos(player->getPos().x, player->getPos().y + 0.5, player->getPos().z);
+
+	Node *shootPoint = new Node();
+	player->addChild(shootPoint);
+	shootPoint->transform.translation = glm::vec3(0.0, 1.0, 2.0);
+	shootPoint->mesh = loadMesh("../res/meshes/cube.obj");
 
 	// instantiate arena
 	StaticBody *ground = new StaticBody();
@@ -26,6 +31,7 @@ int main()
 	game.input->insertNewAction("down", SDL_SCANCODE_S);
 	game.input->insertNewAction("left", SDL_SCANCODE_A);
 	game.input->insertNewAction("right", SDL_SCANCODE_D);
+	game.input->insertNewAction("shoot", SDL_SCANCODE_RETURN);
 
 	while(!game.screen->isClosed)
 	{

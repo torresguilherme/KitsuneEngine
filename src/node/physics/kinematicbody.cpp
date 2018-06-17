@@ -13,6 +13,11 @@ KinematicBody::~KinematicBody()
 	}
 }
 
+void KinematicBody::move(vec3 dir)
+{
+	setPos(getPos().x + dir.x, getPos().y + dir.y, getPos().z + dir.z);
+}
+
 void KinematicBody::moveAndCollide(vec3 dir)
 {
 }
