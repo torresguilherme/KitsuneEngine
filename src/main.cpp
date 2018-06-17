@@ -12,6 +12,7 @@ int main()
 	player->mesh = loadMesh("../res/meshes/tank.obj");
 	player->texture = loadTexture("../res/textures/camouflage.jpg");
 	float playerSpeed = 0.1;
+	player->setPos(player->getPos().x, player->getPos().y + 0.5, player->getPos().z);
 
 	// instantiate arena
 	StaticBody *ground = new StaticBody();
@@ -28,20 +29,33 @@ int main()
 
 	while(!game.screen->isClosed)
 	{
-		// update player rotation
-		int x, y;
-		game.input->getMousePos(&x, &y);
-		x -= S_WIDTH/2;
-		float fx = (float)x/1600.0;
-		y -= S_HEIGHT/2;
-		float fy = (float)y/900.0;
-		player->setRot(0.0, cosf((float)fx) + sinf((float)fy), 0.0);
-
 		// update player and camera position
 		if(game.input->isActionPressed("up"))
 		{
-			player->setPos(player->getPos().x, player->getPos().y, player->getPos().z + playerSpeed);
+			player->setPos(player->getPos().x + (playerSpeed * sinf(player->getRot().y)), player->getPos().y, player->getPos().z + (playerSpeed * cosf(player->getRot().y)));
 		}
+		if(game.input->isActionPressed("down"))
+		{
+			player->setPos(player->getPos().x - (playerSpeed * sinf(player->getRot().y)), player->getPos().y, player->getPos().z - (playerSpeed * cosf(player->getRot().y)));
+		}
+		if(game.input->isActionPressed("left"))
+		{
+			player->setRot(player->getRot().x, player->getRot().y + playerSpeed, player->getRot().z);
+		}
+		if(game.input->isActionPressed("right"))
+		{
+			player->setRot(player->getRot().x, player->getRot().y - playerSpeed, player->getRot().z);
+		}
+		if(player->getPos().x > 8.0)
+			player->setPos(8.0, player->getPos().y, player->getPos().z);
+		if(player->getPos().x < -8.0)
+			player->setPos(-8.0, player->getPos().y, player->getPos().z);
+		if(player->getPos().z > 8.0)
+			player->setPos(player->getPos().x, player->getPos().y, 8.0);
+		if(player->getPos().z < -8.0)
+			player->setPos(player->getPos().x, player->getPos().y, -8.0);
+		game.camera->focus = player->getPos();
+		game.camera->position = player->getPos() + glm::vec3(8, 6, 6);
 
 		// update player shooting
 		// instantiate enemies
