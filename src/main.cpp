@@ -15,6 +15,8 @@ int main()
 	player->texture = loadTexture("../res/textures/camouflage.jpg");
 	float playerSpeed = 0.1;
 	int playerHp = 5;
+	float lastDamage = 0;
+	float invincible = 1.0;
 	int killCount = 0;
 	player->setPos(player->getPos().x, player->getPos().y + 0.5, player->getPos().z);
 
@@ -48,7 +50,7 @@ int main()
 	int maxEnemies = 3;
 	bool started = false;
 	float lastSpawn = 0;
-	float spawnCooldown = 0.5;
+	float spawnCooldown = 0.8;
 
 	// enemy spawn spots
 	vector<glm::vec3> spots;
@@ -177,6 +179,17 @@ int main()
 			}
 			
 			// update player damage
+			if(glm::distance(player->getPos(), enemies[i]->getPos()) < 1.5)
+			{
+				if(lastDamage <= 0)
+				{
+					playerHp--;
+					lastDamage = invincible;
+				}
+			}
+
+			if(lastDamage > 0)
+				lastDamage -= 0.01;
 		}
 
 		// game over
