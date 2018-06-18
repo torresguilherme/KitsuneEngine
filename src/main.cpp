@@ -46,7 +46,8 @@ int main()
 	vector<KinematicBody*> enemies;
 	vector<glm::vec3> enemyDirections;
 	vector<int> enemyHp;
-	float enemySpeed = 0.05;
+	vector<float> backOff;
+	float enemySpeed = 0.03;
 	int maxEnemies = 3;
 	bool started = false;
 	float lastSpawn = 0;
@@ -141,9 +142,10 @@ int main()
 				game.root->addChild(newEnemy);
 				newEnemy->setPos(spots[ind].x, spots[ind].y, spots[ind].z);
 
-				enemyDirections.push_back(player->getGlobalPos(game.root) - newEnemy->getGlobalPos(game.root));
+				enemyDirections.push_back(player->getPos() - newEnemy->getPos());
 				enemyHp.push_back(5);
 				enemies.push_back(newEnemy);
+				backOff.push_back(0);
 
 				lastSpawn = spawnCooldown;
 			}
@@ -155,8 +157,30 @@ int main()
 		}
 
 		// update enemy positions
+		bool oneIsBackingOff = false;
 		for(int i = 0; i < enemies.size(); i++)
 		{
+			enemyDirections[i] = glm::normalize(player->getPos() - enemies[i]->getPos());
+			enemyDirections[i].y = 0.0;
+			for(int j = 0; j < enemies.size(); j++)
+			{
+				if(!oneIsBackingOff && i != j && glm::distance(enemies[i]->getPos(), enemies[j]->getPos()) < 2.0)
+				{
+					backOff[i] = 1.0;
+					oneIsBackingOff = true;
+				}
+			}
+
+			if(backOff[i] <= 0.0)
+			{
+				enemies[i]->move(enemyDirections[i] * enemySpeed);
+			}
+			else
+			{
+				enemies[i]->move(-enemyDirections[i] * enemySpeed);
+				backOff[i] -= enemySpeed;
+			}
+
 			for(int j = 1; j < player->children.size(); j++)
 			{
 				// update enemy damage
