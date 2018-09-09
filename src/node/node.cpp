@@ -101,6 +101,8 @@ void Node::update(double delta)
 {
 	if(hasScript)
 	{
+		lua_pushnumber(state, delta);
+		lua_setglobal(state, "delta");
 		lua_getglobal(state, "_update");
 		lua_pcall(state, 0, LUA_MULTRET, 0);
 	}
@@ -139,8 +141,7 @@ int Node::attachScript(string fileName)
 	state = luaL_newstate();
 	luaL_openlibs(state);
 	// register API functions
-	Node* localNode = (Node*)lua_newuserdata(state, sizeof(Node));
-	lua_pushlightuserdata(state, localNode);
+	lua_pushlightuserdata(state, this);
 	lua_setglobal(state, "_self");
 	lua_register(state, "getPos", Node::getPosL);
 	lua_register(state, "getGlobalPos", Node::getGlobalPosL);

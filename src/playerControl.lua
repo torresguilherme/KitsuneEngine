@@ -1,4 +1,3 @@
 function _update()
-    print(getPos(_self))
-    move(_self, 0.0, 0.01, 0.0)
+    print(getGlobalPos(_self))
 end
