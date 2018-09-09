@@ -15,6 +15,8 @@ class StaticBody: public Node
 
 	StaticBody();
 	~StaticBody();
+	virtual int attachScript(std::string);
+
 	int addCollider(int, CollisionLayer&);
 };
 

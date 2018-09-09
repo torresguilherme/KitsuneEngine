@@ -51,6 +51,7 @@ class Transform
 
 class Node
 {
+	protected:
 	lua_State *state;
 	bool hasScript;
 
@@ -79,7 +80,7 @@ class Node
 	virtual ~Node();
 	virtual void update(double);
 	virtual void draw(glm::mat4, glm::mat4, glm::mat4);
-	int attachScript(std::string);
+	virtual int attachScript(std::string);
 
 	/*
 	 * LUA NATIVE FUNCTIONS
@@ -100,7 +101,7 @@ class Node
 	/*
 	 * LUA API FUNCTIONS
 	 */
-	//to do: addChildL, removeChildL
+	//to do: getNodeL, addChildL, removeChildL
 	static int getPosL(lua_State*);
 	static int getGlobalPosL(lua_State*);
 	static int setPosL(lua_State*);

@@ -1,6 +1,15 @@
 *.o
-*.swp
 *.log
 test.*
 src/exec
+src/KE
+
+# text editor
 .vscode
+*.swp
+
+# CMake files
+src/CMakeFiles
+*.cmake
+src/CMakeCache.txt
+src/Makefile

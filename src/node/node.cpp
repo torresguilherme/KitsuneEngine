@@ -151,6 +151,7 @@ int Node::attachScript(string fileName)
 	lua_register(state, "setRot", Node::setRotL);
 	lua_register(state, "rotateEulerAngles", Node::rotateEulerAnglesL);
 	//lua_register(state, "rotateQuaternion", Node::rotateQuaternionL);
+	//lua_register(state, "getScale", Node::getScaleL);
 	lua_register(state, "setScale", Node::setScaleL);
 	lua_register(state, "scale", Node::scaleL);
 	
@@ -229,7 +230,6 @@ void Node::move(vec3 dir)
 	setPos(getPos().x + dir.x, getPos().y + dir.y, getPos().z + dir.z);
 }
 
-
 vec3 Node::getRot()
 {
 	return transform.rotation;
@@ -255,7 +255,7 @@ void Node::setScale(float x, float y, float z)
  */
 
 // to do: usar metatables para os retornos das funçoes get que retornam vetor
-// to do: addChildL, removeChildL
+// to do: getNodeL, addChildL, removeChildL
 
 int Node::getPosL(lua_State* state)
 {

@@ -1,4 +1,5 @@
 #include "staticbody.hpp"
+using namespace std;
 
 StaticBody::StaticBody()
 {
@@ -10,6 +11,12 @@ StaticBody::~StaticBody()
 	{
 		delete collider;
 	}
+}
+
+int StaticBody::attachScript(string fileName)
+{
+	int ret = Node::attachScript(fileName);
+	return ret;
 }
 
 int StaticBody::addCollider(int type, CollisionLayer &layer)
