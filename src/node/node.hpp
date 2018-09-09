@@ -100,14 +100,20 @@ class Node
 	/*
 	 * LUA API FUNCTIONS
 	 */
+	//to do: addChildL, removeChildL
 	static int getPosL(lua_State*);
 	static int getGlobalPosL(lua_State*);
 	static int setPosL(lua_State*);
 	static int moveL(lua_State*);
+
 	static int getRotL(lua_State*);
 	static int setRotL(lua_State*);
+	static int rotateEulerAnglesL(lua_State*);
+	static int rotateQuaternionL(lua_State*);
+
 	static int getScaleL(lua_State*);
 	static int setScaleL(lua_State*);
+	static int scaleL(lua_State*);
 };
 
 inline double deg2rad(double);
