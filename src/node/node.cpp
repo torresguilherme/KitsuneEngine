@@ -145,7 +145,15 @@ int Node::attachScript(string fileName)
 	lua_setglobal(state, "_self");
 	lua_register(state, "getPos", Node::getPosL);
 	lua_register(state, "getGlobalPos", Node::getGlobalPosL);
+	lua_register(state, "setPos", Node::setPosL);
 	lua_register(state, "move", Node::moveL);
+	//lua_register(state, "getRot", Node::getRotL);
+	lua_register(state, "setRot", Node::setRotL);
+	lua_register(state, "rotateEulerAngles", Node::rotateEulerAnglesL);
+	//lua_register(state, "rotateQuaternion", Node::rotateQuaternionL);
+	//lua_register(state, "getScale", Node::getScaleL);
+	lua_register(state, "setScale", Node::setScaleL);
+	lua_register(state, "scale", Node::scaleL);
 	
 	int s = luaL_loadfile(state, fileName.c_str());
 	if(s == LUA_OK)
@@ -222,7 +230,6 @@ void Node::move(vec3 dir)
 	setPos(getPos().x + dir.x, getPos().y + dir.y, getPos().z + dir.z);
 }
 
-
 vec3 Node::getRot()
 {
 	return transform.rotation;
@@ -247,6 +254,9 @@ void Node::setScale(float x, float y, float z)
  * LUA API FUNCTIONS
  */
 
+// to do: usar metatables para os retornos das funçoes get que retornam vetor
+// to do: getNodeL, addChildL, removeChildL
+
 int Node::getPosL(lua_State* state)
 {
 	Node* node = (Node*) lua_touserdata(state, -1);
@@ -265,6 +275,16 @@ int Node::getGlobalPosL(lua_State* state)
 	return 3;
 }
 
+int Node::setPosL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -4);
+	float x = lua_tonumber(state, -3);
+	float y = lua_tonumber(state, -2);
+	float z = lua_tonumber(state, -1);
+	node->setPos(x, y, z);
+	return 0;
+}
+
 int Node::moveL(lua_State* state)
 {
 	Node* node = (Node*) lua_touserdata(state, -4);
@@ -272,6 +292,50 @@ int Node::moveL(lua_State* state)
 	float y = lua_tonumber(state, -2);
 	float z = lua_tonumber(state, -1);
 	node->move(vec3(x, y, z));
+	return 0;
+}
+
+// todo: getRotL, rotateQuaternionL
+
+int Node::setRotL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -4);
+	float x = lua_tonumber(state, -3);
+	float y = lua_tonumber(state, -2);
+	float z = lua_tonumber(state, -1);
+	node->setRot(x, y, z);
+	return 0;
+}
+
+int Node::rotateEulerAnglesL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -4);
+	float x = lua_tonumber(state, -3);
+	float y = lua_tonumber(state, -2);
+	float z = lua_tonumber(state, -1);
+	node->setRot(node->getRot().x + x, node->getRot().y + y, node->getRot().z + z);
+	return 0;
+}
+
+// todo: getScaleL
+
+int Node::setScaleL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -4);
+	float x = lua_tonumber(state, -3);
+	float y = lua_tonumber(state, -2);
+	float z = lua_tonumber(state, -1);
+	node->setRot(x, y, z);
+	return 0;
+}
+
+int Node::scaleL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -4);
+	float x = lua_tonumber(state, -3);
+	float y = lua_tonumber(state, -2);
+	float z = lua_tonumber(state, -1);
+	node->setScale(node->getScale().x * x, node->getScale().y * y, node->getScale().z * z);
 	return 0;
 }
 

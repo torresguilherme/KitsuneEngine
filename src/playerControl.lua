@@ -1,3 +1,4 @@
 function _update()
-    print(getGlobalPos(_self))
+    -- testing lua API functions
+    -- scale(_self, 1, 1 + delta, 1)
 end
