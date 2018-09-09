@@ -58,6 +58,7 @@ mat4 Transform::getTransformation()
 Node::Node()
 {
 	pauseMode = INHERIT;
+	parent = NULL;
 
 	shader = new Shader("", "");
 	shader->addUniform("transform");
@@ -138,20 +139,32 @@ int Node::attachScript(string fileName)
 	state = luaL_newstate();
 	luaL_openlibs(state);
 	// register API functions
+	Node* localNode = (Node*)lua_newuserdata(state, sizeof(Node));
+	lua_pushlightuserdata(state, localNode);
+	lua_setglobal(state, "_self");
+	lua_register(state, "getPos", Node::getPosL);
+	lua_register(state, "getGlobalPos", Node::getGlobalPosL);
+	lua_register(state, "move", Node::moveL);
 	
 	int s = luaL_loadfile(state, fileName.c_str());
 	if(s == LUA_OK)
 	{
 		lua_pcall(state, 0, LUA_MULTRET, 0);
 		hasScript = true;
+		return 0;
 	}
 
 	else
 	{
 		cerr<<"Error: "<<lua_tostring(state, -1)<<endl;
 		lua_pop(state, 1);
+		return 1;
 	}
 }
+
+/*
+ * LUA NATIVE FUNCTIONS
+ */
 
 void Node::addChild(Node *newChild)
 {
@@ -175,19 +188,15 @@ int Node::removeChild(Node *child)
 	return 1;
 }
 
-/*
- * LUA API FUNCTIONS
- */
-
-mat4 Node::getGlobalMatrix(Node *root)
+mat4 Node::getGlobalMatrix()
 {
-	if(this == root)
+	if(this->parent == NULL)
 	{
 		return transform.getTransformation();
 	}
 	else
 	{
-		return parent->getGlobalMatrix(root) * transform.getTransformation();
+		return parent->getGlobalMatrix() * transform.getTransformation();
 	}
 }
 
@@ -196,9 +205,9 @@ vec3 Node::getPos()
 	return transform.translation;
 }
 
-vec3 Node::getGlobalPos(Node* root)
+vec3 Node::getGlobalPos()
 {
-	mat4 globalMatrix =  getGlobalMatrix(root);
+	mat4 globalMatrix = getGlobalMatrix();
 	return vec3(globalMatrix[3][0], globalMatrix[3][1], globalMatrix[3][2]);
 }
 
@@ -234,6 +243,38 @@ void Node::setScale(float x, float y, float z)
 }
 
 /*
+ * LUA API FUNCTIONS
+ */
+
+int Node::getPosL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -1);
+	lua_pushnumber(state, node->getPos().x);
+	lua_pushnumber(state, node->getPos().y);
+	lua_pushnumber(state, node->getPos().z);
+	return 3;
+}
+
+int Node::getGlobalPosL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -1);
+	lua_pushnumber(state, node->getGlobalPos().x);
+	lua_pushnumber(state, node->getGlobalPos().y);
+	lua_pushnumber(state, node->getGlobalPos().z);
+	return 3;
+}
+
+int Node::moveL(lua_State* state)
+{
+	Node* node = (Node*) lua_touserdata(state, -4);
+	float x = lua_tonumber(state, -3);
+	float y = lua_tonumber(state, -2);
+	float z = lua_tonumber(state, -1);
+	node->move(vec3(x, y, z));
+	return 0;
+}
+
+/*
  * END
  */
 
@@ -246,6 +287,10 @@ inline double rad2deg(double radians)
 {
 	return radians * (180.0 / M_PI);
 }
+
+/*
+ * OBJ LOADER -> to do: refatorar isso aqui
+ */
 
 Mesh *loadMesh(string sFileName)
 {

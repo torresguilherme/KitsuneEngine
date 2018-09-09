@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CC="g++"
-CFLAGS="-no-pie -std=c++17"
+CFLAGS="-g3 -no-pie -std=c++17"
 SRCS="main.cpp
 display.cpp game.cpp input.cpp 
 render/mesh.cpp render/shader.cpp render/texture.cpp

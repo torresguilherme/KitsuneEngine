@@ -13,6 +13,7 @@ int main()
 	game.root->addChild(player);
 	player->mesh = loadMesh("../res/meshes/tank.obj");
 	player->texture = loadTexture("../res/textures/camouflage.jpg");
+	player->attachScript("playerControl.lua");
 	float playerSpeed = 0.1;
 	int playerHp = 5;
 	float lastDamage = 0;
@@ -101,9 +102,9 @@ int main()
 			KinematicBody *newBullet = new KinematicBody();
 			newBullet->mesh = loadMesh("../res/meshes/small-sphere.obj");
 			newBullet->texture = loadTexture("../res/textures/yellow.jpg");
-			newBullet->setPos(shootPoint->getGlobalPos(game.root).x, shootPoint->getGlobalPos(game.root).y, shootPoint->getGlobalPos(game.root).z);
+			newBullet->setPos(shootPoint->getGlobalPos().x, shootPoint->getGlobalPos().y, shootPoint->getGlobalPos().z);
 			newBullet->name = "bullet";
-			directions.push_back(glm::normalize(shootPoint->getGlobalPos(game.root) - player->getGlobalPos(game.root)));
+			directions.push_back(glm::normalize(shootPoint->getGlobalPos() - player->getGlobalPos()));
 			distances.push_back(0.0);
 			player->addChild(newBullet);
 		}

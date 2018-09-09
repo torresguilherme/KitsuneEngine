@@ -27,6 +27,7 @@
 #ifndef NODE2D_HPP_
 #define NODE2D_HPP_
 #include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp>
 #include <iostream>
 #include <iterator>

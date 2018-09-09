@@ -26,6 +26,7 @@
 
 #ifndef NODE_HPP_
 #define NODE_HPP_
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp>
 #include <iostream>
 #include <cstdlib>
@@ -78,24 +79,35 @@ class Node
 	virtual ~Node();
 	virtual void update(double);
 	virtual void draw(glm::mat4, glm::mat4, glm::mat4);
-
 	int attachScript(std::string);
-	void addChild(Node*);
-	int removeChild(Node*);
 
 	/*
-	 * LUA API FUNCTIONS
+	 * LUA NATIVE FUNCTIONS
 	 */
 
-	glm::mat4 getGlobalMatrix(Node*);
+	void addChild(Node*);
+	int removeChild(Node*);
+	glm::mat4 getGlobalMatrix();
 	glm::vec3 getPos();
-	glm::vec3 getGlobalPos(Node*);
+	glm::vec3 getGlobalPos();
 	void setPos(float, float, float);
 	void move(glm::vec3);	
 	glm::vec3 getRot();
 	void setRot(float, float, float);
 	glm::vec3 getScale();
 	void setScale(float, float, float);
+
+	/*
+	 * LUA API FUNCTIONS
+	 */
+	static int getPosL(lua_State*);
+	static int getGlobalPosL(lua_State*);
+	static int setPosL(lua_State*);
+	static int moveL(lua_State*);
+	static int getRotL(lua_State*);
+	static int setRotL(lua_State*);
+	static int getScaleL(lua_State*);
+	static int setScaleL(lua_State*);
 };
 
 inline double deg2rad(double);
