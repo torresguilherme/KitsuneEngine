@@ -5,6 +5,7 @@ src/exec
 src/KE
 
 # text editor
+.vs
 .vscode
 *.swp
 
