@@ -4,10 +4,17 @@ test.*
 src/exec
 src/KE
 
-# text editor
+# text editor/IDE
 .vs
 .vscode
 *.swp
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
 
 # CMake files
 src/CMakeFiles
